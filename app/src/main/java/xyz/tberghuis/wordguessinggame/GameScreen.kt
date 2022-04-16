@@ -62,6 +62,7 @@ fun GameScreen() {
         }
 
         val c = it.nativeKeyEvent.unicodeChar.toChar()
+        logd("onPreviewKeyEvent c $c")
 
         if (c.isLetter()) {
           viewModel.addLetter(c.uppercaseChar())
