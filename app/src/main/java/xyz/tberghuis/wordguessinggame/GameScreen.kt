@@ -30,8 +30,11 @@ fun GameScreen() {
 
     Row(
       Modifier
-        .height(70.dp)
-        .fillMaxWidth(),
+//        .height(70.dp)
+        .weight(1f)
+        .fillMaxWidth()
+//        .border(2.dp, Color.Black)
+      ,
       verticalAlignment = Alignment.CenterVertically,
       horizontalArrangement = Arrangement.SpaceEvenly
     ) {
@@ -50,19 +53,29 @@ fun GameScreen() {
       }
     }
 
-    for (i in 0..5) {
-      Row(Modifier.padding(horizontal = 5.dp)) {
-        for (j in 0..4) {
-          if (j >= wordList[i].length) {
-            RenderChar(null, i, j, cursorRow, solution)
-          } else {
-            RenderChar(wordList[i][j], i, j, cursorRow, solution)
+    // game board
+    Column(Modifier.padding(horizontal = 5.dp)) {
+      for (i in 0..5) {
+        Row {
+          for (j in 0..4) {
+            if (j >= wordList[i].length) {
+              RenderChar(null, i, j, cursorRow, solution)
+            } else {
+              RenderChar(wordList[i][j], i, j, cursorRow, solution)
+            }
           }
         }
       }
     }
-    Spacer(Modifier.height(10.dp))
-    RenderKeyboard()
+//    Spacer(Modifier.height(10.dp))
+    Column(
+      Modifier
+        .padding(horizontal = 5.dp)
+        .padding(top = 20.dp)
+    ) {
+      RenderKeyboard()
+    }
+
   }
   SnackbarContainer()
 }
@@ -151,7 +164,7 @@ fun RenderKeyboard() {
   }
   Row(Modifier.padding(vertical = 5.dp)) {
     Spacer(Modifier.weight(1f))
-    RenderKey("check", COLORS.LightGray) {
+    RenderKey("Check", COLORS.LightGray) {
       println("on click enter")
       vm.onKeyUpEnter()
     }
