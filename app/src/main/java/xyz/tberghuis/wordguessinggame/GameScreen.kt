@@ -1,17 +1,26 @@
 package xyz.tberghuis.wordguessinggame
 
+import android.view.KeyEvent.*
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Button
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
+import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.input.key.onKeyEvent
+import androidx.compose.ui.input.key.onPreviewKeyEvent
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import xyz.tberghuis.wordguessinggame.composables.SnackbarContainer
+import xyz.tberghuis.wordguessinggame.util.logd
 
 @Composable
 fun GameScreen() {
@@ -22,8 +31,39 @@ fun GameScreen() {
   val wordList = wordleState.wordList
   val solution = wordleState.solution
 
+//  val focusRequester = remember { FocusRequester() }
+
+//  LaunchedEffect(focusRequester) {
+//    focusRequester.captureFocus()
+//  }
+
   Column(
-    modifier = Modifier.fillMaxWidth(),
+    modifier = Modifier
+      .fillMaxWidth()
+//      .focusable()
+//      .focusRequester(focusRequester)
+//      .onFocusChanged { focusRequester.requestFocus() }
+      .onPreviewKeyEvent {
+        if (it.nativeKeyEvent.action != ACTION_UP) {
+          return@onPreviewKeyEvent false
+        }
+        logd("onKeyEvent $it")
+
+
+        when (it.nativeKeyEvent.keyCode) {
+          KEYCODE_DEL -> {
+            viewModel.removeLetter()
+            return@onPreviewKeyEvent true
+          }
+          KEYCODE_ENTER -> {
+            viewModel.onKeyUpEnter()
+            return@onPreviewKeyEvent true
+          }
+        }
+
+
+        true
+      },
     horizontalAlignment = Alignment.CenterHorizontally
   ) {
     Column(
@@ -155,7 +195,9 @@ fun RenderKeyboard() {
 fun RowScope.RenderKey(k: String, backgroundColor: Color, onClick: () -> Unit) {
   // todo change font color to white if backgroundColor = (gray, green or yellow)
 
-  val focusManager = LocalFocusManager.current
+//  val focusManager = LocalFocusManager.current
+
+//  val focusRequester = remember { FocusRequester() }
 
   Box(
     modifier = Modifier
@@ -163,8 +205,12 @@ fun RowScope.RenderKey(k: String, backgroundColor: Color, onClick: () -> Unit) {
       .weight(1f)
       .clickable {
         onClick()
+//        focusManager.clearFocus(true)
+//        focusRequester.freeFocus()
       }
-      .background(backgroundColor),
+      .background(backgroundColor)
+//      .focusable(false)
+    ,
     contentAlignment = Alignment.Center
   ) {
     Text(
