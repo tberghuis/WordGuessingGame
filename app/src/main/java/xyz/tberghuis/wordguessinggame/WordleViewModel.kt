@@ -1,5 +1,6 @@
 package xyz.tberghuis.wordguessinggame
 
+import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -12,16 +13,19 @@ import javax.inject.Inject
 class WordleViewModel @Inject constructor(
 
 ) : ViewModel() {
-  val wordleStateFlow = MutableStateFlow(WordleState())
+//  val wordleStateFlow = MutableStateFlow(WordleState())
+
+  val wordleState = mutableStateOf(WordleState())
+
   val snackbarSharedFlow = MutableSharedFlow<String>()
 
   fun newGame() {
-    wordleStateFlow.value = WordleState()
+    wordleState.value = WordleState()
   }
 
   fun addLetter(letter: Char) {
     println("addLetter $letter")
-    val ws = wordleStateFlow.value
+    val ws = wordleState.value
 
     // i should really block calling this in the UI layer
     if (ws.gameState != GameState.PLAYING) {
@@ -46,7 +50,7 @@ class WordleViewModel @Inject constructor(
     val newWordList = ws.wordList.toMutableList()
     newWordList[ws.cursorRow] = newWord
 
-    wordleStateFlow.value = ws.copy(
+    wordleState.value = ws.copy(
       wordList = newWordList,
     )
   }
@@ -54,7 +58,7 @@ class WordleViewModel @Inject constructor(
   fun removeLetter() {
     println("removeLetter")
 
-    val ws = wordleStateFlow.value
+    val ws = wordleState.value
     if (ws.gameState != GameState.PLAYING) {
       return
     }
@@ -68,7 +72,7 @@ class WordleViewModel @Inject constructor(
     val newWordList = ws.wordList.toMutableList()
     newWordList[ws.cursorRow] = newWord
 
-    wordleStateFlow.value = ws.copy(
+    wordleState.value = ws.copy(
       wordList = newWordList
     )
   }
@@ -76,7 +80,7 @@ class WordleViewModel @Inject constructor(
   fun onKeyUpEnter() {
     println("onKeyUpEnter")
 
-    val ws = wordleStateFlow.value
+    val ws = wordleState.value
     if (ws.gameState != GameState.PLAYING) {
       return
     }
@@ -98,7 +102,7 @@ class WordleViewModel @Inject constructor(
       viewModelScope.launch {
         snackbarSharedFlow.emit("Winner")
       }
-      wordleStateFlow.value = ws.copy(
+      wordleState.value = ws.copy(
         gameState = GameState.WON,
         cursorRow = ws.cursorRow + 1
       )
@@ -110,14 +114,14 @@ class WordleViewModel @Inject constructor(
       viewModelScope.launch {
         snackbarSharedFlow.emit("Loser")
       }
-      wordleStateFlow.value = ws.copy(
+      wordleState.value = ws.copy(
         gameState = GameState.LOST,
         cursorRow = ws.cursorRow + 1
       )
       return
     }
 
-    wordleStateFlow.value = ws.copy(
+    wordleState.value = ws.copy(
       cursorRow = ws.cursorRow + 1
     )
   }
