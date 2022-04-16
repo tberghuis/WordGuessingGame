@@ -20,3 +20,7 @@ first task
 allow portrait mode only
 
 render game board ui responsive (all size phone fit)
+
+
+keyboard focus fix
+https://stackoverflow.com/questions/70838476/onkeyevent-without-focus-in-jetpack-compose
