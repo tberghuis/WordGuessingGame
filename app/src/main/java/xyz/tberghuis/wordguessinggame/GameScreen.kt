@@ -70,8 +70,10 @@ fun RenderChar(c: Char?, row: Int, col: Int, cursorRow: Int, solution: String) {
   val renderString = if (c == null) "" else "$c".uppercase()
   val backgroundColor = calcBackgroundColor(renderString, row, col, cursorRow, solution)
   Box(
-    modifier = Modifier.padding(5.dp)
-      .size(62.dp).let {
+    modifier = Modifier
+      .padding(5.dp)
+      .size(62.dp)
+      .let {
         if (backgroundColor == Color.White) {
           it.border(BorderStroke(2.dp, Color.LightGray))
         } else {
@@ -110,7 +112,8 @@ fun calcBackgroundColor(
 fun RenderKeyboard() {
   val vm: WordleViewModel = hiltViewModel()
 
-  val renderKeysInRow: @Composable (row: List<String>) -> Unit = { row ->
+  // no need to use a lambda, should use fun
+  val renderKeysInRow: @Composable RowScope.(row: List<String>) -> Unit = { row ->
     for (k in row) RenderKey(
       k,
       deriveKeyBackgroundColor(k[0], vm.wordleState.value)
@@ -127,32 +130,40 @@ fun RenderKeyboard() {
     renderKeysInRow(row1)
   }
   Row {
+
+
     renderKeysInRow(row2)
   }
   Row {
-    RenderKey("enter", COLORS.LightGray) {
-      println("on click enter")
-      vm.onKeyUpEnter()
-    }
     renderKeysInRow(row3)
     RenderKey("backspace", COLORS.LightGray) {
       println("on click backspace")
       vm.removeLetter()
     }
   }
+  Row {
+    RenderKey("enter", COLORS.LightGray) {
+      println("on click enter")
+      vm.onKeyUpEnter()
+    }
+  }
+
 }
 
 @Composable
-fun RenderKey(k: String, backgroundColor: Color, onClick: () -> Unit) {
+fun RowScope.RenderKey(k: String, backgroundColor: Color, onClick: () -> Unit) {
   // todo change font color to white if backgroundColor = (gray, green or yellow)
   Box(
     modifier = Modifier
-      .padding(5.dp)
+      .padding(1.dp)
+      .weight(1f)
       .clickable { onClick() }
-      .background(backgroundColor)
+      .background(backgroundColor),
+    contentAlignment = Alignment.Center
   ) {
     Text(
-      k, modifier = Modifier.padding(16.dp)
+      k,
+      modifier = Modifier.padding(10.dp)
     )
   }
 }
