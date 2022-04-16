@@ -5,16 +5,14 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
-import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class WordleViewModel @Inject constructor(
-
 ) : ViewModel() {
-//  val wordleStateFlow = MutableStateFlow(WordleState())
 
+  //  val wordleStateFlow = MutableStateFlow(WordleState())
   val wordleState = mutableStateOf(WordleState())
 
   val snackbarSharedFlow = MutableSharedFlow<String>()
