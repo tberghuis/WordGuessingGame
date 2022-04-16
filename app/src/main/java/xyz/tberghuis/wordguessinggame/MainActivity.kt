@@ -19,22 +19,10 @@ class MainActivity : ComponentActivity() {
       WordGuessingGameTheme {
         // A surface container using the 'background' color from the theme
         Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colors.background) {
-          Greeting("Android")
+          GameScreen()
         }
       }
     }
   }
 }
 
-@Composable
-fun Greeting(name: String) {
-  Text(text = "Hello dsada $name!")
-}
-
-@Preview(showBackground = true)
-@Composable
-fun DefaultPreview() {
-  WordGuessingGameTheme {
-    Greeting("Android")
-  }
-}
