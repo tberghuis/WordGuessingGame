@@ -177,16 +177,18 @@ fun RenderKeyboard() {
     renderKeysInRow(row1)
   }
   Row {
-
-
+    Spacer(Modifier.weight(.5f))
     renderKeysInRow(row2)
+    Spacer(Modifier.weight(.5f))
   }
   Row {
+    Spacer(Modifier.weight(1f))
     renderKeysInRow(row3)
-    RenderKey("⌫", COLORS.LightGray) {
+    RenderKey("⌫", COLORS.LightGray, 1.5f) {
       println("on click backspace")
       vm.removeLetter()
     }
+    Spacer(Modifier.weight(.5f))
   }
   Row(Modifier.padding(top = 5.dp)) {
     Spacer(Modifier.weight(1f))
@@ -200,7 +202,7 @@ fun RenderKeyboard() {
 }
 
 @Composable
-fun RowScope.RenderKey(k: String, backgroundColor: Color, onClick: () -> Unit) {
+fun RowScope.RenderKey(k: String, backgroundColor: Color, weight: Float = 1f, onClick: () -> Unit) {
   // todo change font color to white if backgroundColor = (gray, green or yellow)
 
 //  val focusManager = LocalFocusManager.current
@@ -210,7 +212,7 @@ fun RowScope.RenderKey(k: String, backgroundColor: Color, onClick: () -> Unit) {
   Box(
     modifier = Modifier
       .padding(1.dp)
-      .weight(1f)
+      .weight(weight)
       .clickable {
         onClick()
 //        focusManager.clearFocus(true)
