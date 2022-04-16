@@ -17,4 +17,6 @@ first task
   ...
 
 
-  
+allow portrait mode only
+
+render game board ui responsive (all size phone fit)

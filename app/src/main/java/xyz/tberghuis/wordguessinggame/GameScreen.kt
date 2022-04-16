@@ -61,8 +61,15 @@ fun GameScreen() {
           }
         }
 
+        val c = it.nativeKeyEvent.unicodeChar.toChar()
 
-        true
+        if (c.isLetter()) {
+          viewModel.addLetter(c.uppercaseChar())
+          return@onPreviewKeyEvent true
+        }
+
+
+        false
       },
     horizontalAlignment = Alignment.CenterHorizontally
   ) {
