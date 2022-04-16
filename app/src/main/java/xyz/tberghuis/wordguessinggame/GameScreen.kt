@@ -23,9 +23,11 @@ fun GameScreen() {
 
   Column(
     modifier = Modifier
-      .fillMaxWidth(),
-    horizontalAlignment = Alignment.CenterHorizontally
+      .fillMaxSize(),
+    horizontalAlignment = Alignment.CenterHorizontally,
   ) {
+
+
     Column(
       Modifier.height(100.dp),
       verticalArrangement = Arrangement.Bottom,
@@ -46,7 +48,7 @@ fun GameScreen() {
       }
     }
     for (i in 0..5) {
-      Row {
+      Row(Modifier.padding(horizontal = 5.dp)) {
         for (j in 0..4) {
           if (j >= wordList[i].length) {
             RenderChar(null, i, j, cursorRow, solution)
@@ -65,13 +67,15 @@ fun GameScreen() {
 // may not need to pass shit down...
 // who cares
 @Composable
-fun RenderChar(c: Char?, row: Int, col: Int, cursorRow: Int, solution: String) {
+fun RowScope.RenderChar(c: Char?, row: Int, col: Int, cursorRow: Int, solution: String) {
   val renderString = if (c == null) "" else "$c".uppercase()
   val backgroundColor = calcBackgroundColor(renderString, row, col, cursorRow, solution)
   Box(
     modifier = Modifier
       .padding(5.dp)
-      .size(62.dp)
+//      .size(62.dp)
+      .weight(1f)
+      .aspectRatio(1f)
       .let {
         if (backgroundColor == Color.White) {
           it.border(BorderStroke(2.dp, Color.LightGray))
