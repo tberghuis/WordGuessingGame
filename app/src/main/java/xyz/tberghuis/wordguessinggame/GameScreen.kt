@@ -1,9 +1,6 @@
 package xyz.tberghuis.wordguessinggame
 
-import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.background
-import androidx.compose.foundation.border
-import androidx.compose.foundation.clickable
+import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Button
 import androidx.compose.material.Text
@@ -11,6 +8,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import xyz.tberghuis.wordguessinggame.composables.SnackbarContainer
@@ -156,11 +154,16 @@ fun RenderKeyboard() {
 @Composable
 fun RowScope.RenderKey(k: String, backgroundColor: Color, onClick: () -> Unit) {
   // todo change font color to white if backgroundColor = (gray, green or yellow)
+
+  val focusManager = LocalFocusManager.current
+
   Box(
     modifier = Modifier
       .padding(1.dp)
       .weight(1f)
-      .clickable { onClick() }
+      .clickable {
+        onClick()
+      }
       .background(backgroundColor),
     contentAlignment = Alignment.Center
   ) {
