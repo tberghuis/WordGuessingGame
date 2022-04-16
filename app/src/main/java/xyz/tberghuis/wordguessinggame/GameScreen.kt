@@ -1,11 +1,15 @@
 package xyz.tberghuis.wordguessinggame
 
+import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Button
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 
@@ -14,9 +18,9 @@ fun GameScreen() {
   val viewModel: WordleViewModel = hiltViewModel()
   val wordleState = viewModel.wordleState.value
 
-//  val cursorRow = wordleState.cursorRow
+  val cursorRow = wordleState.cursorRow
   val wordList = wordleState.wordList
-//  val solution = wordleState.solution
+  val solution = wordleState.solution
 
   Column(
     modifier = Modifier.fillMaxWidth(),
@@ -45,9 +49,9 @@ fun GameScreen() {
       Row {
         for (j in 0..4) {
           if (j >= wordList[i].length) {
-//            RenderChar(null, i, j, cursorRow, solution)
+            RenderChar(null, i, j, cursorRow, solution)
           } else {
-//            RenderChar(wordList[i][j], i, j, cursorRow, solution)
+            RenderChar(wordList[i][j], i, j, cursorRow, solution)
           }
         }
       }
@@ -56,4 +60,47 @@ fun GameScreen() {
 //    RenderKeyboard(wordleState)
   }
 //  SnackbarContainer()
+}
+
+// may not need to pass shit down...
+// who cares
+@Composable
+fun RenderChar(c: Char?, row: Int, col: Int, cursorRow: Int, solution: String) {
+  val renderString = if (c == null) "" else "$c".uppercase()
+  val backgroundColor = calcBackgroundColor(renderString, row, col, cursorRow, solution)
+  Box(
+    modifier = Modifier.padding(5.dp)
+      .size(62.dp).let {
+        if (backgroundColor == Color.White) {
+          it.border(BorderStroke(2.dp, Color.LightGray))
+        } else {
+          it
+        }
+      }
+      .background(backgroundColor),
+    contentAlignment = Alignment.Center
+  ) {
+    Text(
+      renderString, modifier = Modifier.padding(16.dp)
+    )
+  }
+}
+
+fun calcBackgroundColor(
+  letter: String, row: Int, col: Int,
+  cursorRow: Int, solution: String
+): Color {
+  if (letter == "") {
+    return Color.White
+  }
+  if (row >= cursorRow) {
+    return Color.White
+  }
+  if (!solution.contains(letter)) {
+    return COLORS.Gray
+  }
+  if (solution[col] == letter[0]) {
+    return COLORS.Green
+  }
+  return COLORS.Yellow
 }
