@@ -25,6 +25,7 @@ fun GameScreen() {
     modifier = Modifier
       .fillMaxSize(),
     horizontalAlignment = Alignment.CenterHorizontally,
+    verticalArrangement = Arrangement.SpaceBetween
   ) {
 
 
@@ -146,7 +147,7 @@ fun RenderKeyboard() {
     }
     Spacer(Modifier.weight(.5f))
   }
-  Row(Modifier.padding(top = 5.dp)) {
+  Row(Modifier.padding(vertical = 5.dp)) {
     Spacer(Modifier.weight(1f))
     RenderKey("check", COLORS.LightGray) {
       println("on click enter")
