@@ -13,6 +13,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import xyz.tberghuis.wordguessinggame.composables.SnackbarContainer
 
 @Composable
 fun GameScreen() {
@@ -60,7 +61,7 @@ fun GameScreen() {
     Spacer(Modifier.height(10.dp))
     RenderKeyboard()
   }
-//  SnackbarContainer()
+  SnackbarContainer()
 }
 
 // may not need to pass shit down...
