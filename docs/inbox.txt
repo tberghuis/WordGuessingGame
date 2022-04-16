@@ -1,0 +1,20 @@
+
+
+goal mvp, publish to play store
+animations
+
+reference
+  react project
+  kotlin desktop
+  faradle
+
+
+first task
+  gamestate
+  vm, mutablestateof instead of flow
+  render board
+  render keyboard
+  ...
+
+
+  
