@@ -28,12 +28,19 @@ fun GameScreen() {
     verticalArrangement = Arrangement.SpaceBetween
   ) {
 
-
-    Column(
-      Modifier.height(100.dp),
-      verticalArrangement = Arrangement.Bottom,
-      horizontalAlignment = Alignment.CenterHorizontally
+    Row(
+      Modifier
+        .height(70.dp)
+        .fillMaxWidth(),
+      verticalAlignment = Alignment.CenterVertically,
+      horizontalArrangement = Arrangement.SpaceEvenly
     ) {
+      if (wordleState.gameState == GameState.LOST) {
+        Text(
+          wordleState.solution,
+          modifier = Modifier.padding(15.dp)
+        )
+      }
       if (wordleState.gameState != GameState.PLAYING) {
         Button(onClick = {
           viewModel.newGame()
@@ -41,13 +48,8 @@ fun GameScreen() {
           Text("New Game")
         }
       }
-      if (wordleState.gameState == GameState.LOST) {
-        Text(
-          wordleState.solution,
-          modifier = Modifier.padding(15.dp)
-        )
-      }
     }
+
     for (i in 0..5) {
       Row(Modifier.padding(horizontal = 5.dp)) {
         for (j in 0..4) {
