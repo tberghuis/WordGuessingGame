@@ -32,7 +32,6 @@ fun GameScreen() {
   val solution = wordleState.solution
 
 //  val focusRequester = remember { FocusRequester() }
-
 //  LaunchedEffect(focusRequester) {
 //    focusRequester.captureFocus()
 //  }
@@ -43,35 +42,36 @@ fun GameScreen() {
 //      .focusable()
 //      .focusRequester(focusRequester)
 //      .onFocusChanged { focusRequester.requestFocus() }
-      .onPreviewKeyEvent {
-        if (it.nativeKeyEvent.action != ACTION_UP) {
-          return@onPreviewKeyEvent false
-        }
-        logd("onKeyEvent $it")
-
-
-        when (it.nativeKeyEvent.keyCode) {
-          KEYCODE_DEL -> {
-            viewModel.removeLetter()
-            return@onPreviewKeyEvent true
-          }
-          KEYCODE_ENTER -> {
-            viewModel.onKeyUpEnter()
-            return@onPreviewKeyEvent true
-          }
-        }
-
-        val c = it.nativeKeyEvent.unicodeChar.toChar()
-        logd("onPreviewKeyEvent c $c")
-
-        if (c.isLetter()) {
-          viewModel.addLetter(c.uppercaseChar())
-          return@onPreviewKeyEvent true
-        }
-
-
-        false
-      },
+//      .onPreviewKeyEvent {
+//        if (it.nativeKeyEvent.action != ACTION_UP) {
+//          return@onPreviewKeyEvent false
+//        }
+//        logd("onKeyEvent $it")
+//
+//
+//        when (it.nativeKeyEvent.keyCode) {
+//          KEYCODE_DEL -> {
+//            viewModel.removeLetter()
+//            return@onPreviewKeyEvent true
+//          }
+//          KEYCODE_ENTER -> {
+//            viewModel.onKeyUpEnter()
+//            return@onPreviewKeyEvent true
+//          }
+//        }
+//
+//        val c = it.nativeKeyEvent.unicodeChar.toChar()
+//        logd("onPreviewKeyEvent c $c")
+//
+//        if (c.isLetter()) {
+//          viewModel.addLetter(c.uppercaseChar())
+//          return@onPreviewKeyEvent true
+//        }
+//
+//
+//        false
+//      }
+    ,
     horizontalAlignment = Alignment.CenterHorizontally
   ) {
     Column(
