@@ -136,16 +136,18 @@ fun RenderKeyboard() {
   }
   Row {
     renderKeysInRow(row3)
-    RenderKey("backspace", COLORS.LightGray) {
+    RenderKey("⌫", COLORS.LightGray) {
       println("on click backspace")
       vm.removeLetter()
     }
   }
-  Row {
-    RenderKey("enter", COLORS.LightGray) {
+  Row(Modifier.padding(top = 5.dp)) {
+    Spacer(Modifier.weight(1f))
+    RenderKey("check", COLORS.LightGray) {
       println("on click enter")
       vm.onKeyUpEnter()
     }
+    Spacer(Modifier.weight(1f))
   }
 
 }
