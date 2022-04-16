@@ -3,6 +3,7 @@ package xyz.tberghuis.wordguessinggame
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Button
 import androidx.compose.material.Text
@@ -57,7 +58,7 @@ fun GameScreen() {
       }
     }
     Spacer(Modifier.height(10.dp))
-//    RenderKeyboard(wordleState)
+    RenderKeyboard()
   }
 //  SnackbarContainer()
 }
@@ -103,4 +104,86 @@ fun calcBackgroundColor(
     return COLORS.Green
   }
   return COLORS.Yellow
+}
+
+@Composable
+fun RenderKeyboard() {
+  val vm: WordleViewModel = hiltViewModel()
+
+  val renderKeysInRow: @Composable (row: List<String>) -> Unit = { row ->
+    for (k in row) RenderKey(
+      k,
+      deriveKeyBackgroundColor(k[0], vm.wordleState.value)
+    ) {
+      vm.addLetter(k[0])
+    }
+  }
+
+  val row1 = "QWERTYUIOP".toCharArray().map { "$it" }
+  val row2 = "ASDFGHJKL".toCharArray().map { "$it" }
+  val row3 = "ZXCVBNM".toCharArray().map { "$it" }
+
+  Row {
+    renderKeysInRow(row1)
+  }
+  Row {
+    renderKeysInRow(row2)
+  }
+  Row {
+    RenderKey("enter", COLORS.LightGray) {
+      println("on click enter")
+      vm.onKeyUpEnter()
+    }
+    renderKeysInRow(row3)
+    RenderKey("backspace", COLORS.LightGray) {
+      println("on click backspace")
+      vm.removeLetter()
+    }
+  }
+}
+
+@Composable
+fun RenderKey(k: String, backgroundColor: Color, onClick: () -> Unit) {
+  // todo change font color to white if backgroundColor = (gray, green or yellow)
+  Box(
+    modifier = Modifier
+      .padding(5.dp)
+      .clickable { onClick() }
+      .background(backgroundColor)
+  ) {
+    Text(
+      k, modifier = Modifier.padding(16.dp)
+    )
+  }
+}
+
+fun deriveKeyBackgroundColor(key: Char, wordleState: WordleState): Color {
+  if (wordleState.cursorRow == 0) {
+    return COLORS.LightGray
+  }
+
+  for (row in 0 until wordleState.cursorRow) {
+    val word = wordleState.wordList[row]
+    for (i in 0..4) {
+      if (key == wordleState.solution[i] && key == word[i]) {
+        return COLORS.Green
+      }
+    }
+  }
+
+  for (row in 0 until wordleState.cursorRow) {
+    val word = wordleState.wordList[row]
+    if (word.contains(key) && wordleState.solution.contains(key)) {
+      return COLORS.Yellow
+    }
+  }
+
+  for (row in 0 until wordleState.cursorRow) {
+    val word = wordleState.wordList[row]
+    if (word.contains(key)) {
+      return COLORS.Gray
+    }
+  }
+
+  return COLORS.LightGray
 }
