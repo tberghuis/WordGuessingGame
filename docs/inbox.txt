@@ -3,35 +3,15 @@
 goal mvp, publish to play store
 animations
 
-reference
-  react project
-  kotlin desktop
-  faradle
-
-
-first task
-  gamestate
-  vm, mutablestateof instead of flow
-  render board
-  render keyboard
-  ...
-
-
-allow portrait mode only
 
 render game board ui responsive (all size phone fit)
 
-
-keyboard focus fix
-https://stackoverflow.com/questions/70838476/onkeyevent-without-focus-in-jetpack-compose
-
-rounded corners check button
-
+rounded corners "Check" button
 
 tablets allow landscape orientation, keyboard and game board max width
+tablet keyboard width, key height, aspect ratio
 
-copy animations from khiardle
-
+copy animations from khiardle faradle
 
 playstore
   description
