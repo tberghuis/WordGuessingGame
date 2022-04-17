@@ -5,9 +5,16 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.material.Button
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import xyz.tberghuis.wordguessinggame.composables.SnackbarContainer
@@ -17,9 +24,9 @@ fun GameScreen() {
   val viewModel: WordleViewModel = hiltViewModel()
   val wordleState = viewModel.wordleState.value
 
-//  val cursorRow = wordleState.cursorRow
-//  val wordList = wordleState.wordList
-//  val solution = wordleState.solution
+  val configuration = LocalConfiguration.current
+  val screenHeight = configuration.screenHeightDp.dp
+//  var size by remember { mutableStateOf(Size.Unspecified) }
 
   Column(
     modifier = Modifier
@@ -54,12 +61,12 @@ fun GameScreen() {
     }
 
     // game board
-    RenderGameBoard(wordleState)
+    RenderGameBoard(wordleState, screenHeight)
 
     Column(
       Modifier
         .padding(horizontal = 5.dp)
-        .padding(top = 20.dp)
+        .padding(top = 10.dp)
     ) {
       RenderKeyboard()
     }
@@ -69,16 +76,22 @@ fun GameScreen() {
 }
 
 @Composable
-fun RenderGameBoard(wordleState: WordleState) {
+fun RenderGameBoard(wordleState: WordleState, screenHeight: Dp) {
 
   val cursorRow = wordleState.cursorRow
   val wordList = wordleState.wordList
   val solution = wordleState.solution
 
+  val maxSize = minOf(screenHeight * 0.45f, 500.dp)
+
+
   Column(
     Modifier
-      .padding(horizontal = 5.dp)
-      .widthIn(0.dp, 500.dp)) {
+      .padding(horizontal = 2.dp)
+      .widthIn(0.dp, maxSize)
+//      .heightIn(0.dp, screenHeight * 0.3f)
+//      .sizeIn(0.dp, 0.dp, maxSize, maxSize)
+  ) {
     for (i in 0..5) {
       Row {
         for (j in 0..4) {
@@ -102,7 +115,7 @@ fun RowScope.RenderChar(c: Char?, row: Int, col: Int, cursorRow: Int, solution: 
   val backgroundColor = calcBackgroundColor(renderString, row, col, cursorRow, solution)
   Box(
     modifier = Modifier
-      .padding(5.dp)
+      .padding(2.dp)
 //      .size(62.dp)
       .weight(1f)
       .aspectRatio(1f)
@@ -117,7 +130,8 @@ fun RowScope.RenderChar(c: Char?, row: Int, col: Int, cursorRow: Int, solution: 
     contentAlignment = Alignment.Center
   ) {
     Text(
-      renderString, modifier = Modifier.padding(16.dp)
+      renderString,
+//      modifier = Modifier.padding(16.dp)
     )
   }
 }
@@ -203,7 +217,7 @@ fun RowScope.RenderKey(k: String, backgroundColor: Color, weight: Float = 1f, on
   ) {
     Text(
       k,
-      modifier = Modifier.padding(vertical = 14.dp)
+      modifier = Modifier.padding(vertical = 12.dp)
     )
   }
 }
