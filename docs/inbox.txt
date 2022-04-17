@@ -28,3 +28,4 @@ f-droid
 
 release.txt
 
+privacy policy
