@@ -13,9 +13,12 @@ tablet keyboard width, key height, aspect ratio
 
 copy animations from khiardle faradle
 
+create icon
+
 playstore
   description
   screenshots
+  banner image
 
 github readme
   play store link
