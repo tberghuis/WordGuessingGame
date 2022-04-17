@@ -26,3 +26,18 @@ keyboard focus fix
 https://stackoverflow.com/questions/70838476/onkeyevent-without-focus-in-jetpack-compose
 
 rounded corners check button
+
+
+tablets allow landscape orientation, keyboard and game board max width
+
+copy animations from khiardle
+
+
+playstore
+  description
+  screenshots
+
+github readme
+  play store link
+
+f-droid

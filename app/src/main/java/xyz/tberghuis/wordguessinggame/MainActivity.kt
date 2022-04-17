@@ -97,6 +97,7 @@ fun onPreviewKeyEvent(keyEvent: KeyEvent, viewModel: WordleViewModel): Boolean {
 }
 
 // https://stackoverflow.com/questions/69079267/disable-landscape-mode-in-compose
+// https://stackoverflow.com/questions/69230049/how-to-force-orientation-for-some-screens-in-jetpack-compose
 @Composable
 fun LockScreenOrientation(orientation: Int) {
   val context = LocalContext.current
