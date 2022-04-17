@@ -1,0 +1,2 @@
+Word Guessing Game is a fun word guessing game.
+Source code available https://github.com/tberghuis/WordGuessingGame
