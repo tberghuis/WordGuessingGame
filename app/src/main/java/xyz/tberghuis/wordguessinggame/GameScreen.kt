@@ -203,7 +203,7 @@ fun RowScope.RenderKey(k: String, backgroundColor: Color, weight: Float = 1f, on
   ) {
     Text(
       k,
-      modifier = Modifier.padding(10.dp)
+      modifier = Modifier.padding(vertical = 14.dp)
     )
   }
 }
