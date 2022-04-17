@@ -22,5 +22,9 @@ playstore
 
 github readme
   play store link
+  screenshots
 
 f-droid
+
+release.txt
+
