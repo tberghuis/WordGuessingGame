@@ -17,9 +17,9 @@ fun GameScreen() {
   val viewModel: WordleViewModel = hiltViewModel()
   val wordleState = viewModel.wordleState.value
 
-  val cursorRow = wordleState.cursorRow
-  val wordList = wordleState.wordList
-  val solution = wordleState.solution
+//  val cursorRow = wordleState.cursorRow
+//  val wordList = wordleState.wordList
+//  val solution = wordleState.solution
 
   Column(
     modifier = Modifier
@@ -54,20 +54,8 @@ fun GameScreen() {
     }
 
     // game board
-    Column(Modifier.padding(horizontal = 5.dp)) {
-      for (i in 0..5) {
-        Row {
-          for (j in 0..4) {
-            if (j >= wordList[i].length) {
-              RenderChar(null, i, j, cursorRow, solution)
-            } else {
-              RenderChar(wordList[i][j], i, j, cursorRow, solution)
-            }
-          }
-        }
-      }
-    }
-//    Spacer(Modifier.height(10.dp))
+    RenderGameBoard(wordleState)
+
     Column(
       Modifier
         .padding(horizontal = 5.dp)
@@ -79,6 +67,32 @@ fun GameScreen() {
   }
   SnackbarContainer()
 }
+
+@Composable
+fun RenderGameBoard(wordleState: WordleState) {
+
+  val cursorRow = wordleState.cursorRow
+  val wordList = wordleState.wordList
+  val solution = wordleState.solution
+
+  Column(
+    Modifier
+      .padding(horizontal = 5.dp)
+      .widthIn(0.dp, 500.dp)) {
+    for (i in 0..5) {
+      Row {
+        for (j in 0..4) {
+          if (j >= wordList[i].length) {
+            RenderChar(null, i, j, cursorRow, solution)
+          } else {
+            RenderChar(wordList[i][j], i, j, cursorRow, solution)
+          }
+        }
+      }
+    }
+  }
+}
+
 
 // may not need to pass shit down...
 // who cares
