@@ -1,8 +1,5 @@
 
-
-goal mvp, publish to play store
 animations
-
 
 render game board ui responsive (all size phone fit)
 
@@ -12,20 +9,3 @@ tablets allow landscape orientation, keyboard and game board max width
 tablet keyboard width, key height, aspect ratio
 
 copy animations from khiardle faradle
-
-create icon
-
-playstore
-  description
-  screenshots
-  banner image
-
-github readme
-  play store link
-  screenshots
-
-f-droid
-
-release.txt
-
-privacy policy
