@@ -1,0 +1,5 @@
+update gradle versions
+word fixes
+copy animations from other project
+release
+close github issues
