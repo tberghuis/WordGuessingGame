@@ -1,0 +1,20 @@
+###DONE###
+update gradle versions
+fix random uses seed
+add missing top_words to All_words
+###########
+
+copy animations from other project
+release
+close github issues
+
+
+
+word fixes
+  cyber
+
+
+marketing
+  reddit post as a gif
+  reddit comment with link to play store, github
+  title "Open source Wordle clone"
