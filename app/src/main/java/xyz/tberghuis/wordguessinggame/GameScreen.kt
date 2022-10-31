@@ -39,7 +39,7 @@ fun GameScreen() {
     Row {
       Button(onClick = {
         logd("toggle isDark")
-        viewModel.darkTheme.value = viewModel.darkTheme.value
+        viewModel.isDarkTheme.value = !viewModel.isDarkTheme.value
       }) {
         Text("toggle isDark")
       }

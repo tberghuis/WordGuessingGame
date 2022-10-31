@@ -30,10 +30,11 @@ object ConstantsWggColors {
 
 @Composable
 fun WordGuessingGameTheme(
-  darkTheme: Boolean = isDarkTheme(),
   content: @Composable () -> Unit
 ) {
-  val colors = if (darkTheme) {
+
+  val isDarkTheme = hiltViewModel<WordleViewModel>().isDarkTheme.value
+  val colors = if (isDarkTheme) {
     DarkColorPalette
   } else {
     LightColorPalette
@@ -47,14 +48,3 @@ fun WordGuessingGameTheme(
   )
 }
 
-
-@Composable
-fun isDarkTheme(): Boolean {
-  val vm = hiltViewModel<WordleViewModel>()
-  if (vm.darkTheme.value == null) {
-    val isDark = isSystemInDarkTheme()
-
-    return isDark
-  }
-  return vm.darkTheme.value!!
-}

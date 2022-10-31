@@ -1,15 +1,19 @@
 package xyz.tberghuis.wordguessinggame
 
+import android.content.Context
+import android.content.res.Configuration
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class WordleViewModel @Inject constructor(
+  @ApplicationContext val appContext: Context
 ) : ViewModel() {
 
   //  val wordleStateFlow = MutableStateFlow(WordleState())
@@ -18,9 +22,23 @@ class WordleViewModel @Inject constructor(
   val snackbarSharedFlow = MutableSharedFlow<String>()
 
 
-  val darkTheme = mutableStateOf<Boolean?>(null)
+  val isDarkTheme = mutableStateOf(initIsDarkTheme())
 
-  
+  private fun initIsDarkTheme(): Boolean {
+    // todo
+//    https://stackoverflow.com/questions/44170028/android-how-to-detect-if-night-mode-is-on-when-using-appcompatdelegate-mode-ni
+
+//  todo  onResume check if Configuration changed, meh user can toggle setting with button
+
+
+    // doing it wrong
+    val nightModeFlags: Int =
+      appContext.resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK
+    if(nightModeFlags == Configuration.UI_MODE_NIGHT_YES){
+      return true
+    }
+    return false
+  }
 
 
   fun newGame() {
@@ -107,8 +125,7 @@ class WordleViewModel @Inject constructor(
         snackbarSharedFlow.emit("Winner")
       }
       wordleState.value = ws.copy(
-        gameState = GameState.WON,
-        cursorRow = ws.cursorRow + 1
+        gameState = GameState.WON, cursorRow = ws.cursorRow + 1
       )
       return
     }
@@ -119,8 +136,7 @@ class WordleViewModel @Inject constructor(
         snackbarSharedFlow.emit("Loser")
       }
       wordleState.value = ws.copy(
-        gameState = GameState.LOST,
-        cursorRow = ws.cursorRow + 1
+        gameState = GameState.LOST, cursorRow = ws.cursorRow + 1
       )
       return
     }
