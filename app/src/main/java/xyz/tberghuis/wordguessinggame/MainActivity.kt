@@ -27,6 +27,7 @@ import androidx.compose.ui.input.key.KeyEvent
 import androidx.compose.ui.input.key.onPreviewKeyEvent
 import androidx.compose.ui.platform.LocalContext
 import androidx.hilt.navigation.compose.hiltViewModel
+import xyz.tberghuis.wordguessinggame.tmp.TmpDarkMode
 import xyz.tberghuis.wordguessinggame.ui.theme.WordGuessingGameTheme
 import xyz.tberghuis.wordguessinggame.util.logd
 
@@ -64,8 +65,8 @@ class MainActivity : ComponentActivity() {
             .onPreviewKeyEvent { onPreviewKeyEvent(it, viewModel) },
           color = MaterialTheme.colors.background
         ) {
-          GameScreen()
-//          KeyboardDemo()
+//          GameScreen()
+          TmpDarkMode()
         }
       }
     }
