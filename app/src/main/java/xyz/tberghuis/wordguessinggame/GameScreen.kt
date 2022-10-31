@@ -18,6 +18,7 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import xyz.tberghuis.wordguessinggame.composables.SnackbarContainer
+import xyz.tberghuis.wordguessinggame.util.logd
 
 @Composable
 fun GameScreen() {
@@ -34,6 +35,15 @@ fun GameScreen() {
     horizontalAlignment = Alignment.CenterHorizontally,
     verticalArrangement = Arrangement.SpaceBetween
   ) {
+
+    Row {
+      Button(onClick = {
+        logd("toggle isDark")
+        viewModel.darkTheme.value = viewModel.darkTheme.value
+      }) {
+        Text("toggle isDark")
+      }
+    }
 
     Row(
       Modifier

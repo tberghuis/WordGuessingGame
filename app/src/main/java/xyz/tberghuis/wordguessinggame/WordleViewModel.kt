@@ -18,7 +18,9 @@ class WordleViewModel @Inject constructor(
   val snackbarSharedFlow = MutableSharedFlow<String>()
 
 
-  val darkTheme = mutableStateOf(null)
+  val darkTheme = mutableStateOf<Boolean?>(null)
+
+  
 
 
   fun newGame() {

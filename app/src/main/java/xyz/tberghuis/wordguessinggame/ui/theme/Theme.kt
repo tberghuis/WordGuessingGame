@@ -5,29 +5,28 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.darkColors
 import androidx.compose.material.lightColors
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.ui.graphics.Color
 import androidx.hilt.navigation.compose.hiltViewModel
 import xyz.tberghuis.wordguessinggame.WordleViewModel
 
 private val DarkColorPalette = darkColors(
-  primary = Purple200,
-  primaryVariant = Purple700,
-  secondary = Teal200
 )
 
 private val LightColorPalette = lightColors(
-  primary = Purple500,
-  primaryVariant = Purple700,
-  secondary = Teal200
-
-  /* Other default colors to override
-    background = Color.White,
-    surface = Color.White,
-    onPrimary = Color.White,
-    onSecondary = Color.Black,
-    onBackground = Color.Black,
-    onSurface = Color.Black,
-    */
 )
+
+// doitwrong
+class WggColorPalette(val background: Color)
+
+object ConstantsWggColors {
+  // mapping isDark to WggColorPalette
+  val wggColorsMap = mapOf(
+    false to WggColorPalette(Color.White),
+    true to WggColorPalette(Color.Black),
+  )
+}
+
 
 @Composable
 fun WordGuessingGameTheme(
@@ -52,8 +51,10 @@ fun WordGuessingGameTheme(
 @Composable
 fun isDarkTheme(): Boolean {
   val vm = hiltViewModel<WordleViewModel>()
-  if(vm.darkTheme.value == null){
-    return isSystemInDarkTheme()
+  if (vm.darkTheme.value == null) {
+    val isDark = isSystemInDarkTheme()
+
+    return isDark
   }
   return vm.darkTheme.value!!
 }

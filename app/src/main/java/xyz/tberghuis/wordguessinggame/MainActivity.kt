@@ -65,8 +65,7 @@ class MainActivity : ComponentActivity() {
             .onPreviewKeyEvent { onPreviewKeyEvent(it, viewModel) },
           color = MaterialTheme.colors.background
         ) {
-//          GameScreen()
-          TmpDarkMode()
+          GameScreen()
         }
       }
     }
