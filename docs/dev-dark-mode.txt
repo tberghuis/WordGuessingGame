@@ -1,0 +1,17 @@
+get the dark mode colors on static screen @Preview
+
+jetpack compose theme codelab
+
+implement
+
+version increment
+
+publish release
+
+git merge
+
+compose version gradle bom
+
+update dependencies
+
+cull this file
