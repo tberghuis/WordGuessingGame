@@ -23,57 +23,5 @@ import xyz.tberghuis.wordguessinggame.composables.SnackbarContainer
 @Composable
 fun TmpDarkMode() {
 
-  val viewModel: WordleViewModel = hiltViewModel()
-  val wordleState = viewModel.wordleState.value
-
-  val configuration = LocalConfiguration.current
-  val screenHeight = configuration.screenHeightDp.dp
-//  var size by remember { mutableStateOf(Size.Unspecified) }
-
-  Column(
-    modifier = Modifier
-      .fillMaxSize(),
-    horizontalAlignment = Alignment.CenterHorizontally,
-    verticalArrangement = Arrangement.SpaceBetween
-  ) {
-
-    Row(
-      Modifier
-//        .height(70.dp)
-        .weight(1f)
-        .fillMaxWidth()
-//        .border(2.dp, Color.Black)
-      ,
-      verticalAlignment = Alignment.CenterVertically,
-      horizontalArrangement = Arrangement.SpaceEvenly
-    ) {
-      if (wordleState.gameState == GameState.LOST) {
-        Text(
-          wordleState.solution,
-          modifier = Modifier.padding(15.dp)
-        )
-      }
-      if (wordleState.gameState != GameState.PLAYING) {
-        Button(onClick = {
-          viewModel.newGame()
-        }) {
-          Text("New Game")
-        }
-      }
-    }
-
-    // game board
-    RenderGameBoard(wordleState, screenHeight)
-
-    Column(
-      Modifier
-        .padding(horizontal = 5.dp)
-        .padding(top = 10.dp)
-    ) {
-      RenderKeyboard()
-    }
-
-  }
-  SnackbarContainer()
 
 }
