@@ -35,10 +35,10 @@ object ConstantsWggColors {
         LetterMatchState.NoMatch to Color(120, 124, 126),
         LetterMatchState.Unchecked to Color.White,
       ), keyBackground = mapOf(
-        LetterMatchState.ExactMatch to Color(83, 141, 78),
-        LetterMatchState.Match to Color(181, 159, 59),
-        LetterMatchState.NoMatch to Color(58, 58, 60),
-        LetterMatchState.Unchecked to Color(129, 131, 132),
+        LetterMatchState.ExactMatch to Color(106, 170, 100),
+        LetterMatchState.Match to Color(201, 180, 88),
+        LetterMatchState.NoMatch to Color(120, 124, 126),
+        LetterMatchState.Unchecked to Color(211, 214, 218),
       )
     ),
     true to WggColorPalette(
