@@ -5,13 +5,8 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.material.Button
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.unit.Dp
@@ -20,8 +15,6 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import xyz.tberghuis.wordguessinggame.composables.SnackbarContainer
 import xyz.tberghuis.wordguessinggame.state.CellState
 import xyz.tberghuis.wordguessinggame.ui.theme.ConstantsWggColors.wggColorsMap
-//import xyz.tberghuis.wordguessinggame.ui.theme.ConstantsWggColors.wggColorsMap
-import xyz.tberghuis.wordguessinggame.ui.theme.WggColorPalette
 import xyz.tberghuis.wordguessinggame.util.logd
 
 @Composable
@@ -152,25 +145,6 @@ fun RowScope.RenderChar(c: Char?, row: Int, col: Int, cursorRow: Int, solution: 
     )
   }
 }
-
-//fun calcBackgroundColor(
-//  letter: String, row: Int, col: Int,
-//  cursorRow: Int, solution: String
-//): Color {
-//  if (letter == "") {
-//    return Color.White
-//  }
-//  if (row >= cursorRow) {
-//    return Color.White
-//  }
-//  if (!solution.contains(letter)) {
-//    return COLORS.Gray
-//  }
-//  if (solution[col] == letter[0]) {
-//    return COLORS.Green
-//  }
-//  return COLORS.Yellow
-//}
 
 fun calcCellState(
   letter: String, row: Int, col: Int, cursorRow: Int, solution: String

@@ -44,11 +44,11 @@ object ConstantsWggColors {
     ),
     true to WggColorPalette(
       background = Color(0x12121300),
-      cellBorder = Color(58,58,60),
+      cellBorder = Color(58, 58, 60),
       cellBackground = mapOf(
-        CellState.ExactMatch to COLORS.Green,
-        CellState.Match to COLORS.Yellow,
-        CellState.NoMatch to COLORS.Gray,
+        CellState.ExactMatch to Color(83, 141, 78),
+        CellState.Match to Color(181, 159, 59),
+        CellState.NoMatch to Color(58, 58, 60),
         CellState.Unchecked to Color(0x12121300),
       )
     ),
