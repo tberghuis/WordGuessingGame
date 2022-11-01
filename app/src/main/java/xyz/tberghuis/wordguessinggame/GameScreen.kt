@@ -144,6 +144,7 @@ fun RowScope.RenderChar(c: Char?, row: Int, col: Int, cursorRow: Int, solution: 
     Text(
       renderString,
 //      modifier = Modifier.padding(16.dp)
+      color = Color.White
     )
   }
 }
