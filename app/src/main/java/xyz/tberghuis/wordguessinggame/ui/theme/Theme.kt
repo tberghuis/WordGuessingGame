@@ -30,9 +30,9 @@ object ConstantsWggColors {
   val wggColorsMap = mapOf<Boolean, WggColorPalette>(
     false to WggColorPalette(
       background = Color.White, cellBorder = Color(0x3a3a3c00), cellBackground = mapOf(
-        LetterMatchState.ExactMatch to COLORS.Green,
-        LetterMatchState.Match to COLORS.Yellow,
-        LetterMatchState.NoMatch to COLORS.Gray,
+        LetterMatchState.ExactMatch to Color(83, 141, 78),
+        LetterMatchState.Match to Color(181, 159, 59),
+        LetterMatchState.NoMatch to Color(58, 58, 60),
         LetterMatchState.Unchecked to Color(0x12121300),
       ), keyBackground = mapOf(
         LetterMatchState.ExactMatch to Color(83, 141, 78),

@@ -3,7 +3,12 @@ package xyz.tberghuis.wordguessinggame
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Button
+import androidx.compose.material.Icon
 import androidx.compose.material.Text
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.DarkMode
+import androidx.compose.material.icons.filled.LightMode
+import androidx.compose.material.icons.filled.Menu
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -37,7 +42,12 @@ fun GameScreen() {
         logd("toggle isDark")
         viewModel.isDarkTheme.value = !viewModel.isDarkTheme.value
       }) {
-        Text("toggle isDark")
+//        Text("toggle isDark")
+        if (viewModel.isDarkTheme.value) {
+          Icon(Icons.Filled.LightMode, "light mode")
+        } else {
+          Icon(Icons.Filled.DarkMode, "dark mode")
+        }
       }
     }
 
