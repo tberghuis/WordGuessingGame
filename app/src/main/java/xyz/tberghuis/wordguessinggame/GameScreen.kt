@@ -233,38 +233,6 @@ fun RowScope.RenderKey(k: String, keyState: CellState, weight: Float = 1f, onCli
   }
 }
 
-//fun deriveKeyBackgroundColor(key: Char, wordleState: WordleState): Color {
-//  if (wordleState.cursorRow == 0) {
-//    return COLORS.LightGray
-//  }
-//
-//  for (row in 0 until wordleState.cursorRow) {
-//    val word = wordleState.wordList[row]
-//    for (i in 0..4) {
-//      if (key == wordleState.solution[i] && key == word[i]) {
-//        return COLORS.Green
-//      }
-//    }
-//  }
-//
-//  for (row in 0 until wordleState.cursorRow) {
-//    val word = wordleState.wordList[row]
-//    if (word.contains(key) && wordleState.solution.contains(key)) {
-//      return COLORS.Yellow
-//    }
-//  }
-//
-//  for (row in 0 until wordleState.cursorRow) {
-//    val word = wordleState.wordList[row]
-//    if (word.contains(key)) {
-//      return COLORS.Gray
-//    }
-//  }
-//
-//  return COLORS.LightGray
-//}
-
-
 fun calcKeyState(key: Char, wordleState: WordleState): CellState {
   if (wordleState.cursorRow == 0) {
     return CellState.Unchecked
