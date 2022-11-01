@@ -1,16 +1,14 @@
 package xyz.tberghuis.wordguessinggame.ui.theme
 
-import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.darkColors
 import androidx.compose.material.lightColors
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.graphics.Color
 import androidx.hilt.navigation.compose.hiltViewModel
 import xyz.tberghuis.wordguessinggame.COLORS
 import xyz.tberghuis.wordguessinggame.WordleViewModel
-import xyz.tberghuis.wordguessinggame.state.CellState
+import xyz.tberghuis.wordguessinggame.state.LetterMatchState
 
 private val DarkColorPalette = darkColors(
 )
@@ -23,8 +21,8 @@ class WggColorPalette(
   val background: Color,
   val cellBorder: Color,
 
-  val cellBackground: Map<CellState, Color>,
-  val keyBackground: Map<CellState, Color>,
+  val cellBackground: Map<LetterMatchState, Color>,
+  val keyBackground: Map<LetterMatchState, Color>,
 )
 
 object ConstantsWggColors {
@@ -32,28 +30,28 @@ object ConstantsWggColors {
   val wggColorsMap = mapOf<Boolean, WggColorPalette>(
     false to WggColorPalette(
       background = Color.White, cellBorder = Color(0x3a3a3c00), cellBackground = mapOf(
-        CellState.ExactMatch to COLORS.Green,
-        CellState.Match to COLORS.Yellow,
-        CellState.NoMatch to COLORS.Gray,
-        CellState.Unchecked to Color(0x12121300),
+        LetterMatchState.ExactMatch to COLORS.Green,
+        LetterMatchState.Match to COLORS.Yellow,
+        LetterMatchState.NoMatch to COLORS.Gray,
+        LetterMatchState.Unchecked to Color(0x12121300),
       ), keyBackground = mapOf(
-        CellState.ExactMatch to Color(83, 141, 78),
-        CellState.Match to Color(181, 159, 59),
-        CellState.NoMatch to Color(58, 58, 60),
-        CellState.Unchecked to Color(129, 131, 132),
+        LetterMatchState.ExactMatch to Color(83, 141, 78),
+        LetterMatchState.Match to Color(181, 159, 59),
+        LetterMatchState.NoMatch to Color(58, 58, 60),
+        LetterMatchState.Unchecked to Color(129, 131, 132),
       )
     ),
     true to WggColorPalette(
       background = Color(0x12121300), cellBorder = Color(58, 58, 60), cellBackground = mapOf(
-        CellState.ExactMatch to Color(83, 141, 78),
-        CellState.Match to Color(181, 159, 59),
-        CellState.NoMatch to Color(58, 58, 60),
-        CellState.Unchecked to Color(0x12121300),
+        LetterMatchState.ExactMatch to Color(83, 141, 78),
+        LetterMatchState.Match to Color(181, 159, 59),
+        LetterMatchState.NoMatch to Color(58, 58, 60),
+        LetterMatchState.Unchecked to Color(0x12121300),
       ), keyBackground = mapOf(
-        CellState.ExactMatch to Color(83, 141, 78),
-        CellState.Match to Color(181, 159, 59),
-        CellState.NoMatch to Color(58, 58, 60),
-        CellState.Unchecked to Color(129, 131, 132),
+        LetterMatchState.ExactMatch to Color(83, 141, 78),
+        LetterMatchState.Match to Color(181, 159, 59),
+        LetterMatchState.NoMatch to Color(58, 58, 60),
+        LetterMatchState.Unchecked to Color(129, 131, 132),
       )
     ),
   )

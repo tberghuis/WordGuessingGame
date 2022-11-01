@@ -7,13 +7,12 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import xyz.tberghuis.wordguessinggame.composables.SnackbarContainer
-import xyz.tberghuis.wordguessinggame.state.CellState
+import xyz.tberghuis.wordguessinggame.state.LetterMatchState
 import xyz.tberghuis.wordguessinggame.ui.theme.ConstantsWggColors.wggColorsMap
 import xyz.tberghuis.wordguessinggame.util.logd
 
@@ -134,7 +133,7 @@ fun RowScope.RenderChar(c: Char?, row: Int, col: Int, cursorRow: Int, solution: 
     .weight(1f)
     .aspectRatio(1f)
     .let {
-      if (cellState == CellState.Unchecked) {
+      if (cellState == LetterMatchState.Unchecked) {
         it.border(BorderStroke(2.dp, wggColorPalette.cellBorder))
       } else {
         it
@@ -150,20 +149,20 @@ fun RowScope.RenderChar(c: Char?, row: Int, col: Int, cursorRow: Int, solution: 
 
 fun calcCellState(
   letter: String, row: Int, col: Int, cursorRow: Int, solution: String
-): CellState {
+): LetterMatchState {
   if (letter == "") {
-    return CellState.Unchecked
+    return LetterMatchState.Unchecked
   }
   if (row >= cursorRow) {
-    return CellState.Unchecked
+    return LetterMatchState.Unchecked
   }
   if (!solution.contains(letter)) {
-    return CellState.NoMatch
+    return LetterMatchState.NoMatch
   }
   if (solution[col] == letter[0]) {
-    return CellState.ExactMatch
+    return LetterMatchState.ExactMatch
   }
-  return CellState.Match
+  return LetterMatchState.Match
 }
 
 
@@ -195,7 +194,7 @@ fun RenderKeyboard() {
   Row {
     Spacer(Modifier.weight(1f))
     renderKeysInRow(row3)
-    RenderKey("⌫", CellState.Unchecked, 1.5f) {
+    RenderKey("⌫", LetterMatchState.Unchecked, 1.5f) {
       println("on click backspace")
       vm.removeLetter()
     }
@@ -203,7 +202,7 @@ fun RenderKeyboard() {
   }
   Row(Modifier.padding(vertical = 5.dp)) {
     Spacer(Modifier.weight(1f))
-    RenderKey("Check", CellState.Unchecked) {
+    RenderKey("Check", LetterMatchState.Unchecked) {
       println("on click enter")
       vm.onKeyUpEnter()
     }
@@ -213,7 +212,7 @@ fun RenderKeyboard() {
 }
 
 @Composable
-fun RowScope.RenderKey(k: String, keyState: CellState, weight: Float = 1f, onClick: () -> Unit) {
+fun RowScope.RenderKey(k: String, keyState: LetterMatchState, weight: Float = 1f, onClick: () -> Unit) {
   // todo change font color to white if backgroundColor = (gray, green or yellow)
 
   val vm = hiltViewModel<WordleViewModel>()
@@ -233,16 +232,16 @@ fun RowScope.RenderKey(k: String, keyState: CellState, weight: Float = 1f, onCli
   }
 }
 
-fun calcKeyState(key: Char, wordleState: WordleState): CellState {
+fun calcKeyState(key: Char, wordleState: WordleState): LetterMatchState {
   if (wordleState.cursorRow == 0) {
-    return CellState.Unchecked
+    return LetterMatchState.Unchecked
   }
 
   for (row in 0 until wordleState.cursorRow) {
     val word = wordleState.wordList[row]
     for (i in 0..4) {
       if (key == wordleState.solution[i] && key == word[i]) {
-        return CellState.ExactMatch
+        return LetterMatchState.ExactMatch
       }
     }
   }
@@ -250,17 +249,17 @@ fun calcKeyState(key: Char, wordleState: WordleState): CellState {
   for (row in 0 until wordleState.cursorRow) {
     val word = wordleState.wordList[row]
     if (word.contains(key) && wordleState.solution.contains(key)) {
-      return CellState.Match
+      return LetterMatchState.Match
     }
   }
 
   for (row in 0 until wordleState.cursorRow) {
     val word = wordleState.wordList[row]
     if (word.contains(key)) {
-      return CellState.NoMatch
+      return LetterMatchState.NoMatch
     }
   }
 
-  return CellState.Unchecked
+  return LetterMatchState.Unchecked
 }
 
