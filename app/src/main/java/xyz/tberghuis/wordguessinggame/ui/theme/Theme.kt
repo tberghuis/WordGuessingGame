@@ -29,11 +29,11 @@ object ConstantsWggColors {
   // mapping isDark to WggColorPalette
   val wggColorsMap = mapOf<Boolean, WggColorPalette>(
     false to WggColorPalette(
-      background = Color.White, cellBorder = Color(0x3a3a3c00), cellBackground = mapOf(
-        LetterMatchState.ExactMatch to Color(83, 141, 78),
-        LetterMatchState.Match to Color(181, 159, 59),
-        LetterMatchState.NoMatch to Color(58, 58, 60),
-        LetterMatchState.Unchecked to Color(0x12121300),
+      background = Color.White, cellBorder = Color(211, 214, 218), cellBackground = mapOf(
+        LetterMatchState.ExactMatch to Color(106, 170, 100),
+        LetterMatchState.Match to Color(201, 180, 88),
+        LetterMatchState.NoMatch to Color(120, 124, 126),
+        LetterMatchState.Unchecked to Color.White,
       ), keyBackground = mapOf(
         LetterMatchState.ExactMatch to Color(83, 141, 78),
         LetterMatchState.Match to Color(181, 159, 59),

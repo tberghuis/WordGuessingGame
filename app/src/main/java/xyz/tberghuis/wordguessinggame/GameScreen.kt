@@ -133,10 +133,13 @@ fun RowScope.RenderChar(c: Char?, row: Int, col: Int, cursorRow: Int, solution: 
 //  val backgroundColor = calcBackgroundColor(renderString, row, col, cursorRow, solution)
 
   val vm = hiltViewModel<WordleViewModel>()
-  val isDarkThene = vm.isDarkTheme.value
-  val wggColorPalette = wggColorsMap.getValue(isDarkThene)
+  val isDarkTheme = vm.isDarkTheme.value
+  val wggColorPalette = wggColorsMap.getValue(isDarkTheme)
 
   val cellBackground = wggColorPalette.cellBackground.getValue(cellState)
+
+  val textColor =
+    if (!isDarkTheme && cellState == LetterMatchState.Unchecked) Color.Black else Color.White
 
   Box(modifier = Modifier
     .padding(2.dp)
@@ -154,7 +157,7 @@ fun RowScope.RenderChar(c: Char?, row: Int, col: Int, cursorRow: Int, solution: 
     Text(
       renderString,
 //      modifier = Modifier.padding(16.dp)
-      color = Color.White
+      color = textColor
     )
   }
 }
