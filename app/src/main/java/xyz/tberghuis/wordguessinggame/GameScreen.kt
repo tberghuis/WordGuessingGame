@@ -128,17 +128,19 @@ fun RowScope.RenderChar(c: Char?, row: Int, col: Int, cursorRow: Int, solution: 
 
   val cellBackground = wggColorPalette.cellBackground.getValue(cellState)
 
-  Box(
-    modifier = Modifier.padding(2.dp)
+  Box(modifier = Modifier
+    .padding(2.dp)
 //      .size(62.dp)
-      .weight(1f).aspectRatio(1f).let {
-        if (cellState == CellState.Unchecked) {
-          it.border(BorderStroke(2.dp, wggColorPalette.cellBorder))
-        } else {
-          it
-        }
-      }.background(cellBackground), contentAlignment = Alignment.Center
-  ) {
+    .weight(1f)
+    .aspectRatio(1f)
+    .let {
+      if (cellState == CellState.Unchecked) {
+        it.border(BorderStroke(2.dp, wggColorPalette.cellBorder))
+      } else {
+        it
+      }
+    }
+    .background(cellBackground), contentAlignment = Alignment.Center) {
     Text(
       renderString,
 //      modifier = Modifier.padding(16.dp)
@@ -172,7 +174,7 @@ fun RenderKeyboard() {
   // no need to use a lambda, should use fun
   val renderKeysInRow: @Composable RowScope.(row: List<String>) -> Unit = { row ->
     for (k in row) RenderKey(
-      k, deriveKeyBackgroundColor(k[0], vm.wordleState.value)
+      k, calcKeyState(k[0], vm.wordleState.value)
     ) {
       vm.addLetter(k[0])
     }
@@ -193,7 +195,7 @@ fun RenderKeyboard() {
   Row {
     Spacer(Modifier.weight(1f))
     renderKeysInRow(row3)
-    RenderKey("⌫", COLORS.LightGray, 1.5f) {
+    RenderKey("⌫", CellState.Unchecked, 1.5f) {
       println("on click backspace")
       vm.removeLetter()
     }
@@ -201,7 +203,7 @@ fun RenderKeyboard() {
   }
   Row(Modifier.padding(vertical = 5.dp)) {
     Spacer(Modifier.weight(1f))
-    RenderKey("Check", COLORS.LightGray) {
+    RenderKey("Check", CellState.Unchecked) {
       println("on click enter")
       vm.onKeyUpEnter()
     }
@@ -211,8 +213,12 @@ fun RenderKeyboard() {
 }
 
 @Composable
-fun RowScope.RenderKey(k: String, backgroundColor: Color, weight: Float = 1f, onClick: () -> Unit) {
+fun RowScope.RenderKey(k: String, keyState: CellState, weight: Float = 1f, onClick: () -> Unit) {
   // todo change font color to white if backgroundColor = (gray, green or yellow)
+
+  val vm = hiltViewModel<WordleViewModel>()
+  val backgroundColor =
+    wggColorsMap.getValue(vm.isDarkTheme.value).keyBackground.getValue(keyState)
 
   Box(modifier = Modifier
     .padding(1.dp)
@@ -227,16 +233,48 @@ fun RowScope.RenderKey(k: String, backgroundColor: Color, weight: Float = 1f, on
   }
 }
 
-fun deriveKeyBackgroundColor(key: Char, wordleState: WordleState): Color {
+//fun deriveKeyBackgroundColor(key: Char, wordleState: WordleState): Color {
+//  if (wordleState.cursorRow == 0) {
+//    return COLORS.LightGray
+//  }
+//
+//  for (row in 0 until wordleState.cursorRow) {
+//    val word = wordleState.wordList[row]
+//    for (i in 0..4) {
+//      if (key == wordleState.solution[i] && key == word[i]) {
+//        return COLORS.Green
+//      }
+//    }
+//  }
+//
+//  for (row in 0 until wordleState.cursorRow) {
+//    val word = wordleState.wordList[row]
+//    if (word.contains(key) && wordleState.solution.contains(key)) {
+//      return COLORS.Yellow
+//    }
+//  }
+//
+//  for (row in 0 until wordleState.cursorRow) {
+//    val word = wordleState.wordList[row]
+//    if (word.contains(key)) {
+//      return COLORS.Gray
+//    }
+//  }
+//
+//  return COLORS.LightGray
+//}
+
+
+fun calcKeyState(key: Char, wordleState: WordleState): CellState {
   if (wordleState.cursorRow == 0) {
-    return COLORS.LightGray
+    return CellState.Unchecked
   }
 
   for (row in 0 until wordleState.cursorRow) {
     val word = wordleState.wordList[row]
     for (i in 0..4) {
       if (key == wordleState.solution[i] && key == word[i]) {
-        return COLORS.Green
+        return CellState.ExactMatch
       }
     }
   }
@@ -244,16 +282,17 @@ fun deriveKeyBackgroundColor(key: Char, wordleState: WordleState): Color {
   for (row in 0 until wordleState.cursorRow) {
     val word = wordleState.wordList[row]
     if (word.contains(key) && wordleState.solution.contains(key)) {
-      return COLORS.Yellow
+      return CellState.Match
     }
   }
 
   for (row in 0 until wordleState.cursorRow) {
     val word = wordleState.wordList[row]
     if (word.contains(key)) {
-      return COLORS.Gray
+      return CellState.NoMatch
     }
   }
 
-  return COLORS.LightGray
+  return CellState.Unchecked
 }
+
