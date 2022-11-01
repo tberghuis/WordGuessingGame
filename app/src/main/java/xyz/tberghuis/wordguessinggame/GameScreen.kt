@@ -18,6 +18,10 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import xyz.tberghuis.wordguessinggame.composables.SnackbarContainer
+import xyz.tberghuis.wordguessinggame.state.CellState
+import xyz.tberghuis.wordguessinggame.ui.theme.ConstantsWggColors.wggColorsMap
+//import xyz.tberghuis.wordguessinggame.ui.theme.ConstantsWggColors.wggColorsMap
+import xyz.tberghuis.wordguessinggame.ui.theme.WggColorPalette
 import xyz.tberghuis.wordguessinggame.util.logd
 
 @Composable
@@ -30,8 +34,7 @@ fun GameScreen() {
 //  var size by remember { mutableStateOf(Size.Unspecified) }
 
   Column(
-    modifier = Modifier
-      .fillMaxSize(),
+    modifier = Modifier.fillMaxSize(),
     horizontalAlignment = Alignment.CenterHorizontally,
     verticalArrangement = Arrangement.SpaceBetween
   ) {
@@ -57,8 +60,7 @@ fun GameScreen() {
     ) {
       if (wordleState.gameState == GameState.LOST) {
         Text(
-          wordleState.solution,
-          modifier = Modifier.padding(15.dp)
+          wordleState.solution, modifier = Modifier.padding(15.dp)
         )
       }
       if (wordleState.gameState != GameState.PLAYING) {
@@ -122,25 +124,27 @@ fun RenderGameBoard(wordleState: WordleState, screenHeight: Dp) {
 @Composable
 fun RowScope.RenderChar(c: Char?, row: Int, col: Int, cursorRow: Int, solution: String) {
   val renderString = if (c == null) "" else "$c".uppercase()
-  val backgroundColor = calcBackgroundColor(renderString, row, col, cursorRow, solution)
+
+  val cellState = calcCellState(renderString, row, col, cursorRow, solution)
+
+//  val backgroundColor = calcBackgroundColor(renderString, row, col, cursorRow, solution)
 
   val vm = hiltViewModel<WordleViewModel>()
+  val isDarkThene = vm.isDarkTheme.value
+  val wggColorPalette = wggColorsMap.getValue(isDarkThene)
+
+  val cellBackground = wggColorPalette.cellBackground.getValue(cellState)
 
   Box(
-    modifier = Modifier
-      .padding(2.dp)
+    modifier = Modifier.padding(2.dp)
 //      .size(62.dp)
-      .weight(1f)
-      .aspectRatio(1f)
-      .let {
-        if (backgroundColor == Color.White) {
-          it.border(BorderStroke(2.dp, Color.LightGray))
+      .weight(1f).aspectRatio(1f).let {
+        if (cellState == CellState.Unchecked) {
+          it.border(BorderStroke(2.dp, wggColorPalette.cellBorder))
         } else {
           it
         }
-      }
-      .background(backgroundColor),
-    contentAlignment = Alignment.Center
+      }.background(cellBackground), contentAlignment = Alignment.Center
   ) {
     Text(
       renderString,
@@ -149,24 +153,43 @@ fun RowScope.RenderChar(c: Char?, row: Int, col: Int, cursorRow: Int, solution: 
   }
 }
 
-fun calcBackgroundColor(
-  letter: String, row: Int, col: Int,
-  cursorRow: Int, solution: String
-): Color {
+//fun calcBackgroundColor(
+//  letter: String, row: Int, col: Int,
+//  cursorRow: Int, solution: String
+//): Color {
+//  if (letter == "") {
+//    return Color.White
+//  }
+//  if (row >= cursorRow) {
+//    return Color.White
+//  }
+//  if (!solution.contains(letter)) {
+//    return COLORS.Gray
+//  }
+//  if (solution[col] == letter[0]) {
+//    return COLORS.Green
+//  }
+//  return COLORS.Yellow
+//}
+
+fun calcCellState(
+  letter: String, row: Int, col: Int, cursorRow: Int, solution: String
+): CellState {
   if (letter == "") {
-    return Color.White
+    return CellState.Unchecked
   }
   if (row >= cursorRow) {
-    return Color.White
+    return CellState.Unchecked
   }
   if (!solution.contains(letter)) {
-    return COLORS.Gray
+    return CellState.NoMatch
   }
   if (solution[col] == letter[0]) {
-    return COLORS.Green
+    return CellState.ExactMatch
   }
-  return COLORS.Yellow
+  return CellState.Match
 }
+
 
 @Composable
 fun RenderKeyboard() {
@@ -175,8 +198,7 @@ fun RenderKeyboard() {
   // no need to use a lambda, should use fun
   val renderKeysInRow: @Composable RowScope.(row: List<String>) -> Unit = { row ->
     for (k in row) RenderKey(
-      k,
-      deriveKeyBackgroundColor(k[0], vm.wordleState.value)
+      k, deriveKeyBackgroundColor(k[0], vm.wordleState.value)
     ) {
       vm.addLetter(k[0])
     }
@@ -218,19 +240,15 @@ fun RenderKeyboard() {
 fun RowScope.RenderKey(k: String, backgroundColor: Color, weight: Float = 1f, onClick: () -> Unit) {
   // todo change font color to white if backgroundColor = (gray, green or yellow)
 
-  Box(
-    modifier = Modifier
-      .padding(1.dp)
-      .weight(weight)
-      .clickable {
-        onClick()
-      }
-      .background(backgroundColor),
-    contentAlignment = Alignment.Center
-  ) {
+  Box(modifier = Modifier
+    .padding(1.dp)
+    .weight(weight)
+    .clickable {
+      onClick()
+    }
+    .background(backgroundColor), contentAlignment = Alignment.Center) {
     Text(
-      k,
-      modifier = Modifier.padding(vertical = 12.dp)
+      k, modifier = Modifier.padding(vertical = 12.dp)
     )
   }
 }
