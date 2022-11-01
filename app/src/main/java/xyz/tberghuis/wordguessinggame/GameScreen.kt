@@ -3,21 +3,23 @@ package xyz.tberghuis.wordguessinggame
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Button
+import androidx.compose.material.Icon
 import androidx.compose.material.Text
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.DarkMode
+import androidx.compose.material.icons.filled.LightMode
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import xyz.tberghuis.wordguessinggame.composables.SnackbarContainer
+import xyz.tberghuis.wordguessinggame.state.LetterMatchState
+import xyz.tberghuis.wordguessinggame.ui.theme.ConstantsWggColors.wggColorsMap
+import xyz.tberghuis.wordguessinggame.util.logd
 
 @Composable
 fun GameScreen() {
@@ -29,11 +31,24 @@ fun GameScreen() {
 //  var size by remember { mutableStateOf(Size.Unspecified) }
 
   Column(
-    modifier = Modifier
-      .fillMaxSize(),
+    modifier = Modifier.fillMaxSize(),
     horizontalAlignment = Alignment.CenterHorizontally,
     verticalArrangement = Arrangement.SpaceBetween
   ) {
+
+    Row {
+      Button(onClick = {
+        logd("toggle isDark")
+        viewModel.isDarkTheme.value = !viewModel.isDarkTheme.value
+      }) {
+//        Text("toggle isDark")
+        if (viewModel.isDarkTheme.value) {
+          Icon(Icons.Filled.LightMode, "light mode")
+        } else {
+          Icon(Icons.Filled.DarkMode, "dark mode")
+        }
+      }
+    }
 
     Row(
       Modifier
@@ -47,8 +62,7 @@ fun GameScreen() {
     ) {
       if (wordleState.gameState == GameState.LOST) {
         Text(
-          wordleState.solution,
-          modifier = Modifier.padding(15.dp)
+          wordleState.solution, modifier = Modifier.padding(15.dp)
         )
       }
       if (wordleState.gameState != GameState.PLAYING) {
@@ -112,48 +126,59 @@ fun RenderGameBoard(wordleState: WordleState, screenHeight: Dp) {
 @Composable
 fun RowScope.RenderChar(c: Char?, row: Int, col: Int, cursorRow: Int, solution: String) {
   val renderString = if (c == null) "" else "$c".uppercase()
-  val backgroundColor = calcBackgroundColor(renderString, row, col, cursorRow, solution)
-  Box(
-    modifier = Modifier
-      .padding(2.dp)
+
+  val cellState = calcCellState(renderString, row, col, cursorRow, solution)
+
+//  val backgroundColor = calcBackgroundColor(renderString, row, col, cursorRow, solution)
+
+  val vm = hiltViewModel<WordleViewModel>()
+  val isDarkTheme = vm.isDarkTheme.value
+  val wggColorPalette = wggColorsMap.getValue(isDarkTheme)
+
+  val cellBackground = wggColorPalette.cellBackground.getValue(cellState)
+
+  val textColor =
+    if (!isDarkTheme && cellState == LetterMatchState.Unchecked) Color.Black else Color.White
+
+  Box(modifier = Modifier
+    .padding(2.dp)
 //      .size(62.dp)
-      .weight(1f)
-      .aspectRatio(1f)
-      .let {
-        if (backgroundColor == Color.White) {
-          it.border(BorderStroke(2.dp, Color.LightGray))
-        } else {
-          it
-        }
+    .weight(1f)
+    .aspectRatio(1f)
+    .let {
+      if (cellState == LetterMatchState.Unchecked) {
+        it.border(BorderStroke(2.dp, wggColorPalette.cellBorder))
+      } else {
+        it
       }
-      .background(backgroundColor),
-    contentAlignment = Alignment.Center
-  ) {
+    }
+    .background(cellBackground), contentAlignment = Alignment.Center) {
     Text(
       renderString,
 //      modifier = Modifier.padding(16.dp)
+      color = textColor
     )
   }
 }
 
-fun calcBackgroundColor(
-  letter: String, row: Int, col: Int,
-  cursorRow: Int, solution: String
-): Color {
+fun calcCellState(
+  letter: String, row: Int, col: Int, cursorRow: Int, solution: String
+): LetterMatchState {
   if (letter == "") {
-    return Color.White
+    return LetterMatchState.Unchecked
   }
   if (row >= cursorRow) {
-    return Color.White
+    return LetterMatchState.Unchecked
   }
   if (!solution.contains(letter)) {
-    return COLORS.Gray
+    return LetterMatchState.NoMatch
   }
   if (solution[col] == letter[0]) {
-    return COLORS.Green
+    return LetterMatchState.ExactMatch
   }
-  return COLORS.Yellow
+  return LetterMatchState.Match
 }
+
 
 @Composable
 fun RenderKeyboard() {
@@ -162,8 +187,7 @@ fun RenderKeyboard() {
   // no need to use a lambda, should use fun
   val renderKeysInRow: @Composable RowScope.(row: List<String>) -> Unit = { row ->
     for (k in row) RenderKey(
-      k,
-      deriveKeyBackgroundColor(k[0], vm.wordleState.value)
+      k, calcKeyState(k[0], vm.wordleState.value)
     ) {
       vm.addLetter(k[0])
     }
@@ -184,7 +208,7 @@ fun RenderKeyboard() {
   Row {
     Spacer(Modifier.weight(1f))
     renderKeysInRow(row3)
-    RenderKey("⌫", COLORS.LightGray, 1.5f) {
+    RenderKey("⌫", LetterMatchState.Unchecked, 1.5f) {
       println("on click backspace")
       vm.removeLetter()
     }
@@ -192,7 +216,7 @@ fun RenderKeyboard() {
   }
   Row(Modifier.padding(vertical = 5.dp)) {
     Spacer(Modifier.weight(1f))
-    RenderKey("Check", COLORS.LightGray) {
+    RenderKey("Check", LetterMatchState.Unchecked) {
       println("on click enter")
       vm.onKeyUpEnter()
     }
@@ -202,36 +226,38 @@ fun RenderKeyboard() {
 }
 
 @Composable
-fun RowScope.RenderKey(k: String, backgroundColor: Color, weight: Float = 1f, onClick: () -> Unit) {
+fun RowScope.RenderKey(
+  k: String, keyState: LetterMatchState, weight: Float = 1f, onClick: () -> Unit
+) {
   // todo change font color to white if backgroundColor = (gray, green or yellow)
 
-  Box(
-    modifier = Modifier
-      .padding(1.dp)
-      .weight(weight)
-      .clickable {
-        onClick()
-      }
-      .background(backgroundColor),
-    contentAlignment = Alignment.Center
-  ) {
-    Text(
-      k,
-      modifier = Modifier.padding(vertical = 12.dp)
-    )
+  val vm = hiltViewModel<WordleViewModel>()
+  val backgroundColor = wggColorsMap.getValue(vm.isDarkTheme.value).keyBackground.getValue(keyState)
+
+  val textColor = if (!vm.isDarkTheme.value && keyState == LetterMatchState.NoMatch) Color.White
+  else Color.Unspecified
+
+  Box(modifier = Modifier
+    .padding(1.dp)
+    .weight(weight)
+    .clickable {
+      onClick()
+    }
+    .background(backgroundColor), contentAlignment = Alignment.Center) {
+    Text(k, modifier = Modifier.padding(vertical = 12.dp), color = textColor)
   }
 }
 
-fun deriveKeyBackgroundColor(key: Char, wordleState: WordleState): Color {
+fun calcKeyState(key: Char, wordleState: WordleState): LetterMatchState {
   if (wordleState.cursorRow == 0) {
-    return COLORS.LightGray
+    return LetterMatchState.Unchecked
   }
 
   for (row in 0 until wordleState.cursorRow) {
     val word = wordleState.wordList[row]
     for (i in 0..4) {
       if (key == wordleState.solution[i] && key == word[i]) {
-        return COLORS.Green
+        return LetterMatchState.ExactMatch
       }
     }
   }
@@ -239,16 +265,17 @@ fun deriveKeyBackgroundColor(key: Char, wordleState: WordleState): Color {
   for (row in 0 until wordleState.cursorRow) {
     val word = wordleState.wordList[row]
     if (word.contains(key) && wordleState.solution.contains(key)) {
-      return COLORS.Yellow
+      return LetterMatchState.Match
     }
   }
 
   for (row in 0 until wordleState.cursorRow) {
     val word = wordleState.wordList[row]
     if (word.contains(key)) {
-      return COLORS.Gray
+      return LetterMatchState.NoMatch
     }
   }
 
-  return COLORS.LightGray
+  return LetterMatchState.Unchecked
 }
+

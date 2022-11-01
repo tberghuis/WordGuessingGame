@@ -14,14 +14,11 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import xyz.tberghuis.wordguessinggame.WordleViewModel
-import kotlinx.coroutines.flow.collect
 import xyz.tberghuis.wordguessinggame.util.logd
-
 
 @Composable
 fun SnackbarContainer() {
   val viewModel: WordleViewModel = hiltViewModel()
-
   val snackbarHostState = remember { SnackbarHostState() }
 
   LaunchedEffect(Unit) {
@@ -30,25 +27,21 @@ fun SnackbarContainer() {
       snackbarHostState.showSnackbar(it)
     }
   }
+  val background = if (viewModel.isDarkTheme.value) Color.White else Color.Black
+  val textColor = if (viewModel.isDarkTheme.value) Color.Black else Color.White
 
-  SnackbarHost(
-    hostState = snackbarHostState,
-    snackbar = { snackbarData: SnackbarData ->
-      Box(Modifier.fillMaxSize()) {
-        Card(
-          Modifier
-//            .padding(top = 100.dp)
-            .align(Alignment.Center)
-            .background(Color.Black)
-            .padding(16.dp)
-        ) {
-          Text(
-            modifier = Modifier.background(Color.Black),
-            text = snackbarData.message,
-            color = Color.White
-          )
-        }
-      }
+  SnackbarHost(hostState = snackbarHostState, snackbar = { snackbarData: SnackbarData ->
+    Box(
+      Modifier.fillMaxSize(),
+      contentAlignment = Alignment.Center
+    ) {
+      Text(
+        modifier = Modifier
+          .background(background)
+          .padding(16.dp),
+        text = snackbarData.message,
+        color = textColor,
+      )
     }
-  )
+  })
 }

@@ -1,0 +1,11 @@
+
+version increment
+
+publish release
+
+git merge
+
+cull this file
+
+add answer to https://stackoverflow.com/questions/65192409/jetpack-compose-how-to-change-theme-from-light-to-dark-mode-programmatically-on
+for use case initial default to system, then allow user toggle

@@ -27,9 +27,12 @@ import androidx.compose.ui.input.key.KeyEvent
 import androidx.compose.ui.input.key.onPreviewKeyEvent
 import androidx.compose.ui.platform.LocalContext
 import androidx.hilt.navigation.compose.hiltViewModel
+import dagger.hilt.android.AndroidEntryPoint
+import xyz.tberghuis.wordguessinggame.tmp.TmpDarkMode
 import xyz.tberghuis.wordguessinggame.ui.theme.WordGuessingGameTheme
 import xyz.tberghuis.wordguessinggame.util.logd
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
 
   override fun onCreate(savedInstanceState: Bundle?) {
@@ -65,7 +68,6 @@ class MainActivity : ComponentActivity() {
           color = MaterialTheme.colors.background
         ) {
           GameScreen()
-//          KeyboardDemo()
         }
       }
     }
