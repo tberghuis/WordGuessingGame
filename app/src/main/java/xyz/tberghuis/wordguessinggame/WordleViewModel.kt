@@ -29,12 +29,12 @@ class WordleViewModel @Inject constructor(
 //    https://stackoverflow.com/questions/44170028/android-how-to-detect-if-night-mode-is-on-when-using-appcompatdelegate-mode-ni
 
 //  todo  onResume check if Configuration changed, meh user can toggle setting with button
-
+// check nowinandroid how it handles dark/light theme
 
     // doing it wrong
     val nightModeFlags: Int =
       appContext.resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK
-    if(nightModeFlags == Configuration.UI_MODE_NIGHT_YES){
+    if (nightModeFlags == Configuration.UI_MODE_NIGHT_YES) {
       return true
     }
     return false

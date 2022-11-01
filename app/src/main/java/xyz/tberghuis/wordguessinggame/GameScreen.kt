@@ -123,6 +123,9 @@ fun RenderGameBoard(wordleState: WordleState, screenHeight: Dp) {
 fun RowScope.RenderChar(c: Char?, row: Int, col: Int, cursorRow: Int, solution: String) {
   val renderString = if (c == null) "" else "$c".uppercase()
   val backgroundColor = calcBackgroundColor(renderString, row, col, cursorRow, solution)
+
+  val vm = hiltViewModel<WordleViewModel>()
+
   Box(
     modifier = Modifier
       .padding(2.dp)

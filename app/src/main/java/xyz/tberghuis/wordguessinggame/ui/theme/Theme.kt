@@ -17,13 +17,22 @@ private val LightColorPalette = lightColors(
 )
 
 // doitwrong
-class WggColorPalette(val background: Color)
+class WggColorPalette(
+  val background: Color,
+  val cellBorder: Color
+)
 
 object ConstantsWggColors {
   // mapping isDark to WggColorPalette
   val wggColorsMap = mapOf(
-    false to WggColorPalette(Color.White),
-    true to WggColorPalette(Color.Black),
+    false to WggColorPalette(
+      background = Color.White,
+      cellBorder = Color(0x3a3a3c00),
+    ),
+    true to WggColorPalette(
+      background = Color(0x12121300),
+      cellBorder = Color(0x3a3a3c00),
+    ),
   )
 }
 
