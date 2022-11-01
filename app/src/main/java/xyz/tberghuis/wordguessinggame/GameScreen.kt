@@ -7,6 +7,7 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
@@ -212,12 +213,16 @@ fun RenderKeyboard() {
 }
 
 @Composable
-fun RowScope.RenderKey(k: String, keyState: LetterMatchState, weight: Float = 1f, onClick: () -> Unit) {
+fun RowScope.RenderKey(
+  k: String, keyState: LetterMatchState, weight: Float = 1f, onClick: () -> Unit
+) {
   // todo change font color to white if backgroundColor = (gray, green or yellow)
 
   val vm = hiltViewModel<WordleViewModel>()
-  val backgroundColor =
-    wggColorsMap.getValue(vm.isDarkTheme.value).keyBackground.getValue(keyState)
+  val backgroundColor = wggColorsMap.getValue(vm.isDarkTheme.value).keyBackground.getValue(keyState)
+
+  val textColor = if (!vm.isDarkTheme.value && keyState == LetterMatchState.NoMatch) Color.White
+  else Color.Unspecified
 
   Box(modifier = Modifier
     .padding(1.dp)
@@ -226,9 +231,7 @@ fun RowScope.RenderKey(k: String, keyState: LetterMatchState, weight: Float = 1f
       onClick()
     }
     .background(backgroundColor), contentAlignment = Alignment.Center) {
-    Text(
-      k, modifier = Modifier.padding(vertical = 12.dp)
-    )
+    Text(k, modifier = Modifier.padding(vertical = 12.dp), color = textColor)
   }
 }
 
