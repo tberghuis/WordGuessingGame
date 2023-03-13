@@ -41,60 +41,61 @@ fun ThemeSwitcher(
   animationSpec: AnimationSpec<Dp> = tween(durationMillis = 300),
   onClick: () -> Unit
 ) {
-    val offset by animateDpAsState(
-        targetValue = if (darkTheme) 0.dp else size,
-        animationSpec = animationSpec
-    )
+  val offset by animateDpAsState(
+    targetValue = if (darkTheme) 0.dp else size,
+    animationSpec = animationSpec
+  )
 
-    Box(modifier = Modifier
-        .width(size * 2)
-        .height(size)
-        .clip(shape = parentShape)
-        .clickable { onClick() }
-        .background(MaterialTheme.colors.secondary)
+  Box(modifier = Modifier
+    .padding(top = 5.dp)
+    .width(size * 2)
+    .height(size)
+    .clip(shape = parentShape)
+    .clickable { onClick() }
+//        .background(MaterialTheme.colors.secondary)
+  ) {
+    Box(
+      modifier = Modifier
+        .size(size)
+        .offset(x = offset)
+        .padding(all = padding)
+        .clip(shape = toggleShape)
+        .background(MaterialTheme.colors.primary)
+    ) {}
+    Row(
+      modifier = Modifier
+        .border(
+          border = BorderStroke(
+            width = borderWidth,
+            color = MaterialTheme.colors.primary
+          ),
+          shape = parentShape
+        )
     ) {
-        Box(
-            modifier = Modifier
-                .size(size)
-                .offset(x = offset)
-                .padding(all = padding)
-                .clip(shape = toggleShape)
-                .background(MaterialTheme.colors.primary)
-        ) {}
-        Row(
-            modifier = Modifier
-                .border(
-                    border = BorderStroke(
-                        width = borderWidth,
-                        color = MaterialTheme.colors.primary
-                    ),
-                    shape = parentShape
-                )
-        ) {
-            Box(
-                modifier = Modifier.size(size),
-                contentAlignment = Alignment.Center
-            ) {
-                Icon(
-                    modifier = Modifier.size(iconSize),
-                    imageVector = Icons.Default.Nightlight,
-                    contentDescription = "Theme Icon",
-                    tint = if (darkTheme) MaterialTheme.colors.secondary
-                    else MaterialTheme.colors.primary
-                )
-            }
-            Box(
-                modifier = Modifier.size(size),
-                contentAlignment = Alignment.Center
-            ) {
-                Icon(
-                    modifier = Modifier.size(iconSize),
-                    imageVector = Icons.Default.LightMode,
-                    contentDescription = "Theme Icon",
-                    tint = if (darkTheme) MaterialTheme.colors.primary
-                    else MaterialTheme.colors.secondary
-                )
-            }
-        }
+      Box(
+        modifier = Modifier.size(size),
+        contentAlignment = Alignment.Center
+      ) {
+        Icon(
+          modifier = Modifier.size(iconSize),
+          imageVector = Icons.Default.Nightlight,
+          contentDescription = "Theme Icon",
+          tint = if (darkTheme) MaterialTheme.colors.background
+          else MaterialTheme.colors.primary
+        )
+      }
+      Box(
+        modifier = Modifier.size(size),
+        contentAlignment = Alignment.Center
+      ) {
+        Icon(
+          modifier = Modifier.size(iconSize),
+          imageVector = Icons.Default.LightMode,
+          contentDescription = "Theme Icon",
+          tint = if (darkTheme) MaterialTheme.colors.primary
+          else MaterialTheme.colors.background
+        )
+      }
     }
+  }
 }

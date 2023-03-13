@@ -9,6 +9,10 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.DarkMode
 import androidx.compose.material.icons.filled.LightMode
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -17,6 +21,7 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import xyz.tberghuis.wordguessinggame.composables.SnackbarContainer
+import xyz.tberghuis.wordguessinggame.composables.ThemeSwitcher
 import xyz.tberghuis.wordguessinggame.state.LetterMatchState
 import xyz.tberghuis.wordguessinggame.ui.theme.ConstantsWggColors.wggColorsMap
 import xyz.tberghuis.wordguessinggame.util.logd
@@ -36,19 +41,28 @@ fun GameScreen() {
     verticalArrangement = Arrangement.SpaceBetween
   ) {
 
-    Row {
-      Button(onClick = {
-        logd("toggle isDark")
-        viewModel.isDarkTheme.value = !viewModel.isDarkTheme.value
-      }) {
-//        Text("toggle isDark")
-        if (viewModel.isDarkTheme.value) {
-          Icon(Icons.Filled.LightMode, "light mode")
-        } else {
-          Icon(Icons.Filled.DarkMode, "dark mode")
-        }
-      }
-    }
+
+      ThemeSwitcher(darkTheme = viewModel.isDarkTheme.value,
+        size = 40.dp,
+        padding = 5.dp,
+        onClick = {
+          viewModel.isDarkTheme.value = !viewModel.isDarkTheme.value
+        })
+
+
+
+//    Row {
+//      Button(onClick = {
+//        logd("toggle isDark")
+//        viewModel.isDarkTheme.value = !viewModel.isDarkTheme.value
+//      }) {
+//        if (viewModel.isDarkTheme.value) {
+//          Icon(Icons.Filled.LightMode, "light mode")
+//        } else {
+//          Icon(Icons.Filled.DarkMode, "dark mode")
+//        }
+//      }
+//    }
 
     Row(
       Modifier
