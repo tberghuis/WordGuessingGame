@@ -2,6 +2,10 @@ update gradle
 
 https://www.youtube.com/watch?v=Nvphdmi-6qc
 
+
+save theme setting to datastore preferences
+
+
 update version
 build
 release
