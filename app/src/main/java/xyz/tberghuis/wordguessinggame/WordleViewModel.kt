@@ -10,10 +10,14 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.first
+import xyz.tberghuis.wordguessinggame.data.DarkModeRepository
 
 @HiltViewModel
 class WordleViewModel @Inject constructor(
-  @ApplicationContext val appContext: Context
+//  @ApplicationContext val appContext: Context
+  private val darkModeRepository: DarkModeRepository
 ) : ViewModel() {
 
   //  val wordleStateFlow = MutableStateFlow(WordleState())
@@ -21,23 +25,26 @@ class WordleViewModel @Inject constructor(
 
   val snackbarSharedFlow = MutableSharedFlow<String>()
 
+  // doitwrong
+  val initialised = mutableStateOf<Boolean>(false)
+  val isDarkTheme = mutableStateOf<Boolean>(false)
 
-  val isDarkTheme = mutableStateOf(initIsDarkTheme())
+  init {
+    viewModelScope.launch {
+      isDarkTheme.value = darkModeRepository.isDarkModeFlow.first()
+      initialised.value = true
+      darkModeRepository.isDarkModeFlow.collect {
+        isDarkTheme.value = it
+      }
 
-  private fun initIsDarkTheme(): Boolean {
-    // todo
-//    https://stackoverflow.com/questions/44170028/android-how-to-detect-if-night-mode-is-on-when-using-appcompatdelegate-mode-ni
-
-//  todo  onResume check if Configuration changed, meh user can toggle setting with button
-// check nowinandroid how it handles dark/light theme
-
-    // doing it wrong
-    val nightModeFlags: Int =
-      appContext.resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK
-    if (nightModeFlags == Configuration.UI_MODE_NIGHT_YES) {
-      return true
     }
-    return false
+  }
+
+  fun toggleDarkTheme() {
+    viewModelScope.launch {
+      darkModeRepository.updateIsDarkMode(!isDarkTheme.value)
+    }
+
   }
 
 

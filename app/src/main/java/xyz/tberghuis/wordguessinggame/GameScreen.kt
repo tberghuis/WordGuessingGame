@@ -29,6 +29,12 @@ import xyz.tberghuis.wordguessinggame.util.logd
 @Composable
 fun GameScreen() {
   val viewModel: WordleViewModel = hiltViewModel()
+
+  if (!viewModel.initialised.value) {
+    return
+  }
+
+
   val wordleState = viewModel.wordleState.value
 
   val configuration = LocalConfiguration.current
@@ -40,12 +46,12 @@ fun GameScreen() {
     horizontalAlignment = Alignment.CenterHorizontally,
     verticalArrangement = Arrangement.SpaceBetween
   ) {
-      ThemeSwitcher(darkTheme = viewModel.isDarkTheme.value,
-        size = 40.dp,
-        padding = 5.dp,
-        onClick = {
-          viewModel.isDarkTheme.value = !viewModel.isDarkTheme.value
-        })
+    ThemeSwitcher(darkTheme = viewModel.isDarkTheme.value,
+      size = 40.dp,
+      padding = 5.dp,
+      onClick = {
+        viewModel.toggleDarkTheme()
+      })
 
 //    Row {
 //      Button(onClick = {
