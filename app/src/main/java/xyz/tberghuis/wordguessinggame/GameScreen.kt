@@ -40,16 +40,12 @@ fun GameScreen() {
     horizontalAlignment = Alignment.CenterHorizontally,
     verticalArrangement = Arrangement.SpaceBetween
   ) {
-
-
       ThemeSwitcher(darkTheme = viewModel.isDarkTheme.value,
         size = 40.dp,
         padding = 5.dp,
         onClick = {
           viewModel.isDarkTheme.value = !viewModel.isDarkTheme.value
         })
-
-
 
 //    Row {
 //      Button(onClick = {

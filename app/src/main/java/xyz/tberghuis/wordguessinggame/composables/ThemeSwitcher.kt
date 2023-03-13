@@ -68,6 +68,7 @@ fun ThemeSwitcher(
           border = BorderStroke(
             width = borderWidth,
             color = MaterialTheme.colors.primary
+
           ),
           shape = parentShape
         )
