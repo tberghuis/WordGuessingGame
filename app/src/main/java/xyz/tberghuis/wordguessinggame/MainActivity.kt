@@ -28,7 +28,6 @@ import androidx.compose.ui.input.key.onPreviewKeyEvent
 import androidx.compose.ui.platform.LocalContext
 import androidx.hilt.navigation.compose.hiltViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import xyz.tberghuis.wordguessinggame.tmp.TmpDarkMode
 import xyz.tberghuis.wordguessinggame.ui.theme.WordGuessingGameTheme
 import xyz.tberghuis.wordguessinggame.util.logd
 
