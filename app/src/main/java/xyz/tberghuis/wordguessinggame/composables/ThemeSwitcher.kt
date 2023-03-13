@@ -29,6 +29,7 @@ import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 
+// copied from https://github.com/stevdza-san/ThemeSwitcher
 @Composable
 fun ThemeSwitcher(
   darkTheme: Boolean = false,
@@ -68,7 +69,6 @@ fun ThemeSwitcher(
           border = BorderStroke(
             width = borderWidth,
             color = MaterialTheme.colors.primary
-
           ),
           shape = parentShape
         )
