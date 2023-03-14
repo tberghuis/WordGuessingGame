@@ -6,4 +6,4 @@
 Jetpack Compose, Hilt, ViewModel
 
 ## Screenshot
-<img alt='Screenshot' src='https://github.com/tberghuis/WordGuessingGame/raw/master/docs/screenshots/films.png' width="400"/>
+<img alt='Screenshot' src='https://github.com/tberghuis/WordGuessingGame/raw/master/docs/screenshots/Screenshot_dark.png' width="400"/>
