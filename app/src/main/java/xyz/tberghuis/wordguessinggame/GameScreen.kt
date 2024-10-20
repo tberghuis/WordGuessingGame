@@ -3,16 +3,8 @@ package xyz.tberghuis.wordguessinggame
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Button
-import androidx.compose.material.Icon
 import androidx.compose.material.Text
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.DarkMode
-import androidx.compose.material.icons.filled.LightMode
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -23,7 +15,6 @@ import xyz.tberghuis.wordguessinggame.composables.SnackbarContainer
 import xyz.tberghuis.wordguessinggame.composables.ThemeSwitcher
 import xyz.tberghuis.wordguessinggame.state.LetterMatchState
 import xyz.tberghuis.wordguessinggame.ui.theme.ConstantsWggColors.wggColorsMap
-import xyz.tberghuis.wordguessinggame.util.logd
 import androidx.lifecycle.viewmodel.compose.viewModel
 
 @Composable
@@ -296,4 +287,3 @@ fun calcKeyState(key: Char, wordleState: WordleState): LetterMatchState {
 
   return LetterMatchState.Unchecked
 }
-
