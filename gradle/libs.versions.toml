@@ -1,9 +1,10 @@
 [versions]
 agp = "8.7.1"
 kotlin = "1.8.10"
+androidx-compose-bom = "2024.10.00"
 
 [libraries]
-
+androidx-compose-bom = { module = "androidx.compose:compose-bom", version.ref = "androidx-compose-bom" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
