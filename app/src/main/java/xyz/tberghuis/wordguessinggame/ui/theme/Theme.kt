@@ -5,7 +5,7 @@ import androidx.compose.material.darkColors
 import androidx.compose.material.lightColors
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
-import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.viewmodel.compose.viewModel
 import xyz.tberghuis.wordguessinggame.COLORS
 import xyz.tberghuis.wordguessinggame.WordleViewModel
 import xyz.tberghuis.wordguessinggame.state.LetterMatchState
@@ -63,7 +63,7 @@ fun WordGuessingGameTheme(
   content: @Composable () -> Unit
 ) {
 
-  val isDarkTheme = hiltViewModel<WordleViewModel>().isDarkTheme.value
+  val isDarkTheme = viewModel<WordleViewModel>().isDarkTheme.value
   val colors = if (isDarkTheme) {
     DarkColorPalette
   } else {

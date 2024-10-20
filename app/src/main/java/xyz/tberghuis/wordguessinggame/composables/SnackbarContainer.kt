@@ -12,13 +12,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.viewmodel.compose.viewModel
 import xyz.tberghuis.wordguessinggame.WordleViewModel
 import xyz.tberghuis.wordguessinggame.util.logd
 
 @Composable
 fun SnackbarContainer() {
-  val viewModel: WordleViewModel = hiltViewModel()
+  val viewModel: WordleViewModel = viewModel()
   val snackbarHostState = remember { SnackbarHostState() }
 
   LaunchedEffect(Unit) {

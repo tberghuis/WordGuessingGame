@@ -19,16 +19,16 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
 import xyz.tberghuis.wordguessinggame.composables.SnackbarContainer
 import xyz.tberghuis.wordguessinggame.composables.ThemeSwitcher
 import xyz.tberghuis.wordguessinggame.state.LetterMatchState
 import xyz.tberghuis.wordguessinggame.ui.theme.ConstantsWggColors.wggColorsMap
 import xyz.tberghuis.wordguessinggame.util.logd
+import androidx.lifecycle.viewmodel.compose.viewModel
 
 @Composable
 fun GameScreen() {
-  val viewModel: WordleViewModel = hiltViewModel()
+  val viewModel: WordleViewModel = viewModel()
 
   if (!viewModel.initialised.value) {
     return
@@ -147,7 +147,9 @@ fun RowScope.RenderChar(c: Char?, row: Int, col: Int, cursorRow: Int, solution: 
 
 //  val backgroundColor = calcBackgroundColor(renderString, row, col, cursorRow, solution)
 
-  val vm = hiltViewModel<WordleViewModel>()
+//  val vm = hiltViewModel<WordleViewModel>()
+  val vm:WordleViewModel = viewModel()
+
   val isDarkTheme = vm.isDarkTheme.value
   val wggColorPalette = wggColorsMap.getValue(isDarkTheme)
 
@@ -198,7 +200,7 @@ fun calcCellState(
 
 @Composable
 fun RenderKeyboard() {
-  val vm: WordleViewModel = hiltViewModel()
+  val vm: WordleViewModel = viewModel()
 
   // no need to use a lambda, should use fun
   val renderKeysInRow: @Composable RowScope.(row: List<String>) -> Unit = { row ->
@@ -247,7 +249,7 @@ fun RowScope.RenderKey(
 ) {
   // todo change font color to white if backgroundColor = (gray, green or yellow)
 
-  val vm = hiltViewModel<WordleViewModel>()
+  val vm = viewModel<WordleViewModel>()
   val backgroundColor = wggColorsMap.getValue(vm.isDarkTheme.value).keyBackground.getValue(keyState)
 
   val textColor = if (!vm.isDarkTheme.value && keyState == LetterMatchState.NoMatch) Color.White

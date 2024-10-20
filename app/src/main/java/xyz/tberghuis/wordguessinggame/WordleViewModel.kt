@@ -1,24 +1,24 @@
 package xyz.tberghuis.wordguessinggame
 
+import android.app.Application
 import android.content.Context
 import android.content.res.Configuration
 import androidx.compose.runtime.mutableStateOf
+import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import dagger.hilt.android.lifecycle.HiltViewModel
-import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.first
 import xyz.tberghuis.wordguessinggame.data.DarkModeRepository
 
-@HiltViewModel
-class WordleViewModel @Inject constructor(
-//  @ApplicationContext val appContext: Context
-  private val darkModeRepository: DarkModeRepository
-) : ViewModel() {
+class WordleViewModel(
+  application: Application,
+) : AndroidViewModel(application) {
+
+  private val darkModeRepository = application.provideDarkModeRepository()
+
 
   //  val wordleStateFlow = MutableStateFlow(WordleState())
   val wordleState = mutableStateOf(WordleState())

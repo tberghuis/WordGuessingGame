@@ -26,12 +26,10 @@ import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.input.key.KeyEvent
 import androidx.compose.ui.input.key.onPreviewKeyEvent
 import androidx.compose.ui.platform.LocalContext
-import androidx.hilt.navigation.compose.hiltViewModel
-import dagger.hilt.android.AndroidEntryPoint
+import androidx.lifecycle.viewmodel.compose.viewModel
 import xyz.tberghuis.wordguessinggame.ui.theme.WordGuessingGameTheme
 import xyz.tberghuis.wordguessinggame.util.logd
 
-@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
 
   override fun onCreate(savedInstanceState: Bundle?) {
@@ -51,7 +49,7 @@ class MainActivity : ComponentActivity() {
         }
       }
 
-      val viewModel: WordleViewModel = hiltViewModel()
+      val viewModel: WordleViewModel = viewModel()
 
       WordGuessingGameTheme {
         // A surface container using the 'background' color from the theme
