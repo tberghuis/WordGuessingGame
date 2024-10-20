@@ -53,18 +53,16 @@ dependencies {
   androidTestImplementation(composeBom)
   debugImplementation(composeBom)
 
+  implementation(libs.androidx.material)
+  implementation(libs.androidx.ui)
+  implementation(libs.androidx.ui.tooling.preview)
+  implementation(libs.androidx.material.icons.extended)
 
+  implementation(libs.androidx.navigation.compose)
+  implementation(libs.androidx.datastore.preferences)
 
-  implementation("androidx.compose.material:material")
-  implementation("androidx.compose.ui:ui")
-  implementation("androidx.compose.ui:ui-tooling-preview")
-  debugImplementation("androidx.compose.ui:ui-tooling")
-  androidTestImplementation("androidx.compose.ui:ui-test-junit4")
-  debugImplementation("androidx.compose.ui:ui-test-manifest")
-  implementation("androidx.compose.material:material-icons-extended")
+  debugImplementation(libs.androidx.ui.tooling)
+  debugImplementation(libs.androidx.ui.test.manifest)
 
-  implementation("androidx.navigation:navigation-compose:2.4.2")
-
-
-  implementation("androidx.datastore:datastore-preferences:1.0.0")
+  androidTestImplementation(libs.androidx.ui.test.junit4)
 }
