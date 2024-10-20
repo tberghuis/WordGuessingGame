@@ -6,7 +6,6 @@ import androidx.compose.material.lightColors
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 import androidx.lifecycle.viewmodel.compose.viewModel
-import xyz.tberghuis.wordguessinggame.COLORS
 import xyz.tberghuis.wordguessinggame.WordleViewModel
 import xyz.tberghuis.wordguessinggame.state.LetterMatchState
 
