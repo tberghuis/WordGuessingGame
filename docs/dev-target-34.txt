@@ -1,7 +1,1 @@
-targetSdk 34
- gradle
- manifest
-
-clean code
-
 RELEASE.txt
