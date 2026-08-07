@@ -2,8 +2,8 @@
 agp = "9.3.1"
 datastore-preferences = "1.2.1"
 kotlin = "2.4.10"
-androidx-compose-bom = "2024.10.00"
-navigation-compose = "2.8.3"
+androidx-compose-bom = "2026.06.01"
+navigation-compose = "2.9.8"
 
 [libraries]
 androidx-compose-bom = { module = "androidx.compose:compose-bom", version.ref = "androidx-compose-bom" }
