@@ -9,7 +9,7 @@ android {
 
   defaultConfig {
     applicationId = "xyz.tberghuis.wordguessinggame"
-    minSdk = 21
+    minSdk = 23
     targetSdk = 34
     versionCode = 6
     versionName = "1.4.0"
