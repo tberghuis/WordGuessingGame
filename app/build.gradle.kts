@@ -5,7 +5,7 @@ plugins {
 }
 
 android {
-  compileSdk = 34
+  compileSdk = 37
 
   defaultConfig {
     applicationId = "xyz.tberghuis.wordguessinggame"
