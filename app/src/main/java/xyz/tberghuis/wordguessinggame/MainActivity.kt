@@ -11,7 +11,9 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.focusable
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
@@ -54,19 +56,21 @@ class MainActivity : ComponentActivity() {
       val viewModel: WordleViewModel = viewModel()
 
       WordGuessingGameTheme {
-        // A surface container using the 'background' color from the theme
-        Surface(
-          modifier = Modifier
-            .fillMaxSize()
-            .focusRequester(focusRequester)
-            .onFocusChanged {
-              hasFocus = it.hasFocus
-            }
-            .focusable()
-            .onPreviewKeyEvent { onPreviewKeyEvent(it, viewModel) },
-          color = MaterialTheme.colorScheme.background
-        ) {
-          GameScreen()
+        Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
+          Surface(
+            modifier = Modifier
+              .padding(innerPadding)
+              .fillMaxSize()
+              .focusRequester(focusRequester)
+              .onFocusChanged {
+                hasFocus = it.hasFocus
+              }
+              .focusable()
+              .onPreviewKeyEvent { onPreviewKeyEvent(it, viewModel) },
+            color = MaterialTheme.colorScheme.background
+          ) {
+            GameScreen()
+          }
         }
       }
     }
