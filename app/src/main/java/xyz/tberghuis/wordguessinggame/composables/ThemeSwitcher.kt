@@ -15,11 +15,11 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material.Icon
-import androidx.compose.material.MaterialTheme
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.LightMode
 import androidx.compose.material.icons.filled.Nightlight
+import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
@@ -61,14 +61,14 @@ fun ThemeSwitcher(
         .offset(x = offset)
         .padding(all = padding)
         .clip(shape = toggleShape)
-        .background(MaterialTheme.colors.primary)
+        .background(MaterialTheme.colorScheme.primary)
     ) {}
     Row(
       modifier = Modifier
         .border(
           border = BorderStroke(
             width = borderWidth,
-            color = MaterialTheme.colors.primary
+            color = MaterialTheme.colorScheme.primary
           ),
           shape = parentShape
         )
@@ -81,8 +81,8 @@ fun ThemeSwitcher(
           modifier = Modifier.size(iconSize),
           imageVector = Icons.Default.Nightlight,
           contentDescription = "Theme Icon",
-          tint = if (darkTheme) MaterialTheme.colors.background
-          else MaterialTheme.colors.primary
+          tint = if (darkTheme) MaterialTheme.colorScheme.background
+          else MaterialTheme.colorScheme.primary
         )
       }
       Box(
@@ -93,8 +93,8 @@ fun ThemeSwitcher(
           modifier = Modifier.size(iconSize),
           imageVector = Icons.Default.LightMode,
           contentDescription = "Theme Icon",
-          tint = if (darkTheme) MaterialTheme.colors.primary
-          else MaterialTheme.colors.background
+          tint = if (darkTheme) MaterialTheme.colorScheme.primary
+          else MaterialTheme.colorScheme.background
         )
       }
     }
