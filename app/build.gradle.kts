@@ -55,7 +55,7 @@ dependencies {
   androidTestImplementation(composeBom)
   debugImplementation(composeBom)
 
-  implementation(libs.androidx.material)
+//  implementation(libs.androidx.material)
   
   implementation(libs.androidx.ui)
   implementation(libs.androidx.ui.tooling.preview)

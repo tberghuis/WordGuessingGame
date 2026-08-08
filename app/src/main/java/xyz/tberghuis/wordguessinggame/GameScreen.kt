@@ -2,9 +2,11 @@ package xyz.tberghuis.wordguessinggame
 
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -16,6 +18,7 @@ import xyz.tberghuis.wordguessinggame.composables.ThemeSwitcher
 import xyz.tberghuis.wordguessinggame.state.LetterMatchState
 import xyz.tberghuis.wordguessinggame.ui.theme.ConstantsWggColors.wggColorsMap
 import androidx.lifecycle.viewmodel.compose.viewModel
+import xyz.tberghuis.wordguessinggame.util.logd
 
 @Composable
 fun GameScreen() {
@@ -37,7 +40,8 @@ fun GameScreen() {
     horizontalAlignment = Alignment.CenterHorizontally,
     verticalArrangement = Arrangement.SpaceBetween
   ) {
-    ThemeSwitcher(darkTheme = viewModel.isDarkTheme.value,
+    ThemeSwitcher(
+      darkTheme = viewModel.isDarkTheme.value,
       size = 40.dp,
       padding = 5.dp,
       onClick = {
@@ -103,8 +107,10 @@ fun RenderGameBoard(wordleState: WordleState, screenHeight: Dp) {
   val wordList = wordleState.wordList
   val solution = wordleState.solution
 
-  val maxSize = minOf(screenHeight * 0.45f, 500.dp)
-
+  val maxSize = minOf(screenHeight * 0.4f, 500.dp)
+//  LaunchedEffect(Unit) {
+//    logd("RenderGameBoard maxSize $maxSize")
+//  }
 
   Column(
     Modifier
@@ -139,7 +145,7 @@ fun RowScope.RenderChar(c: Char?, row: Int, col: Int, cursorRow: Int, solution: 
 //  val backgroundColor = calcBackgroundColor(renderString, row, col, cursorRow, solution)
 
 //  val vm = hiltViewModel<WordleViewModel>()
-  val vm:WordleViewModel = viewModel()
+  val vm: WordleViewModel = viewModel()
 
   val isDarkTheme = vm.isDarkTheme.value
   val wggColorPalette = wggColorsMap.getValue(isDarkTheme)
@@ -149,19 +155,20 @@ fun RowScope.RenderChar(c: Char?, row: Int, col: Int, cursorRow: Int, solution: 
   val textColor =
     if (!isDarkTheme && cellState == LetterMatchState.Unchecked) Color.Black else Color.White
 
-  Box(modifier = Modifier
-    .padding(2.dp)
+  Box(
+    modifier = Modifier
+      .padding(2.dp)
 //      .size(62.dp)
-    .weight(1f)
-    .aspectRatio(1f)
-    .let {
-      if (cellState == LetterMatchState.Unchecked) {
-        it.border(BorderStroke(2.dp, wggColorPalette.cellBorder))
-      } else {
-        it
+      .weight(1f)
+      .aspectRatio(1f)
+      .let {
+        if (cellState == LetterMatchState.Unchecked) {
+          it.border(BorderStroke(2.dp, wggColorPalette.cellBorder))
+        } else {
+          it
+        }
       }
-    }
-    .background(cellBackground), contentAlignment = Alignment.Center) {
+      .background(cellBackground), contentAlignment = Alignment.Center) {
     Text(
       renderString,
 //      modifier = Modifier.padding(16.dp)
@@ -246,13 +253,14 @@ fun RowScope.RenderKey(
   val textColor = if (!vm.isDarkTheme.value && keyState == LetterMatchState.NoMatch) Color.White
   else Color.Unspecified
 
-  Box(modifier = Modifier
-    .padding(1.dp)
-    .weight(weight)
-    .clickable {
-      onClick()
-    }
-    .background(backgroundColor), contentAlignment = Alignment.Center) {
+  Box(
+    modifier = Modifier
+      .padding(1.dp)
+      .weight(weight)
+      .clickable {
+        onClick()
+      }
+      .background(backgroundColor), contentAlignment = Alignment.Center) {
     Text(k, modifier = Modifier.padding(vertical = 12.dp), color = textColor)
   }
 }
