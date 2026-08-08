@@ -10,7 +10,7 @@ android {
   defaultConfig {
     applicationId = "xyz.tberghuis.wordguessinggame"
     minSdk = 23
-    targetSdk = 35
+    targetSdk = 36
     versionCode = 6
     versionName = "1.4.0"
 
@@ -56,7 +56,7 @@ dependencies {
   debugImplementation(composeBom)
 
 //  implementation(libs.androidx.material)
-  
+
   implementation(libs.androidx.ui)
   implementation(libs.androidx.ui.tooling.preview)
   implementation(libs.androidx.material.icons.extended)
@@ -68,8 +68,8 @@ dependencies {
   debugImplementation(libs.androidx.ui.test.manifest)
 
   androidTestImplementation(libs.androidx.ui.test.junit4)
-  
-  
-    implementation(libs.androidx.compose.material3)
-  
+
+
+  implementation(libs.androidx.compose.material3)
+
 }
