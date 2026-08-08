@@ -1,18 +1,23 @@
 package xyz.tberghuis.wordguessinggame.ui.theme
 
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.darkColors
-import androidx.compose.material.lightColors
+import android.os.Build
+import androidx.compose.foundation.isSystemInDarkTheme
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.darkColorScheme
+import androidx.compose.material3.dynamicDarkColorScheme
+import androidx.compose.material3.dynamicLightColorScheme
+import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.viewmodel.compose.viewModel
 import xyz.tberghuis.wordguessinggame.WordleViewModel
 import xyz.tberghuis.wordguessinggame.state.LetterMatchState
 
-private val DarkColorPalette = darkColors(
+private val DarkColorPalette = darkColorScheme(
 )
 
-private val LightColorPalette = lightColors(
+private val LightColorPalette = lightColorScheme(
 )
 
 // doitwrong
@@ -59,6 +64,9 @@ object ConstantsWggColors {
 
 @Composable
 fun WordGuessingGameTheme(
+//  darkTheme: Boolean = isSystemInDarkTheme(),
+  // Dynamic color is available on Android 12+
+//  dynamicColor: Boolean = true,
   content: @Composable () -> Unit
 ) {
 
@@ -69,8 +77,20 @@ fun WordGuessingGameTheme(
     LightColorPalette
   }
 
+
+//  val colorScheme = when {
+//    dynamicColor && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S -> {
+//      val context = LocalContext.current
+//      if (isDarkTheme) dynamicDarkColorScheme(context) else dynamicLightColorScheme(context)
+//    }
+//
+//    isDarkTheme -> DarkColorPalette
+//    else -> LightColorPalette
+//  }
+
+
   MaterialTheme(
-    colors = colors, typography = Typography, shapes = Shapes, content = content
+    colorScheme = colors, typography = Typography, content = content
   )
 }
 
