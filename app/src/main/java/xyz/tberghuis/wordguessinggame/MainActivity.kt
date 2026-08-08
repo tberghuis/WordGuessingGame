@@ -8,6 +8,7 @@ import android.os.Bundle
 import android.view.KeyEvent.*
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.focusable
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.MaterialTheme
@@ -34,6 +35,7 @@ class MainActivity : ComponentActivity() {
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
+    enableEdgeToEdge()
     setContent {
 
       // TODO allow landscape for tablets
@@ -81,6 +83,7 @@ fun onPreviewKeyEvent(keyEvent: KeyEvent, viewModel: WordleViewModel): Boolean {
       viewModel.removeLetter()
       return true
     }
+
     KEYCODE_ENTER -> {
       viewModel.onKeyUpEnter()
       return true
